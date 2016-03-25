@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.njaqn.itravel.aqnapp.MainActivity" >
+  <RelativeLayout
+     android:layout_width="fill_parent"
+     android:layout_height="45dp"
+     android:id="@+id/first"
+     android:background="@drawable/title_color">
+	  <ImageButton
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:background="@drawable/title_color"
+	    android:layout_centerVertical="true"
+	    android:paddingLeft="10dp"
+	    android:src="@drawable/m01_jian_tou_left"
+	    android:onClick="returnOnClick"
+	    />
+	  <TextView
+	     android:layout_width="wrap_content"
+	     android:layout_height="30dp"
+	     android:layout_centerVertical="true"
+	     android:layout_centerHorizontal="true"
+	     android:textColor="#ffffff"
+	     android:textSize="20dp"
+	     android:gravity="center"
+	     android:text="城市切换"
+	     android:id="@+id/city_content"
+	     />
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="42dp"
+      android:layout_marginBottom="7dp"
+      android:layout_marginTop="7dp"
+      android:id="@+id/citySearchMenu">
+	  
+	<EditText
+	    android:id="@+id/search"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:background="@drawable/am003_bian_kuang"
+	    android:ems="10"
+	    android:layout_marginLeft="10dp"
+	    android:hint="@string/citySearch"
+	    android:iconifiedByDefault="true"
+	    android:textColor="@drawable/title_color" />
+
+  </RelativeLayout>
+ 
+ <LinearLayout
+	    android:layout_width="fill_parent"
+     	android:layout_height="fill_parent"
+     	
+     	android:orientation="horizontal">
+
+      <ListView
+          android:id="@+id/lvProvinceAm003"
+          android:layout_width="139dp"
+          android:layout_height="wrap_content"
+          android:background="@drawable/title_color"
+          android:choiceMode="singleChoice"
+          android:listSelector="@drawable/am003_select_item" />
+
+      <ListView
+          android:id="@+id/lvCityAm003"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@drawable/listview_bg_color"
+          android:dividerHeight="0dip"
+          android:choiceMode="singleChoice"
+          android:listSelector="@drawable/am003_select_item"
+          >
+      </ListView>
+
+  </LinearLayout>
+  </LinearLayout>

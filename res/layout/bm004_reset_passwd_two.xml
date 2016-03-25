@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.itcast.pensonalcenter.LoginActivity" >
+
+    <RelativeLayout 
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="#24b69f">
+        
+        <ImageView
+ 	        android:layout_width="15dip"
+ 	        android:layout_height="20dip"
+ 	        android:layout_marginTop="10dip"
+ 	        android:layout_marginLeft="5dip"
+		    android:layout_gravity="center"
+ 	        android:src="@drawable/m01_jian_tou_left"
+ 	        android:onClick="backResetPassWdOnClick"/>	  
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="重置密码"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true" />           
+       
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="65dp">
+       
+        <TextView
+            android:id="@+id/lblNewPasswd"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="新密码"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtNewPasswd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblNewPasswd"
+            android:background="#ffffff"
+            android:hint="请输入新密码"
+            android:textColorHint="#d2d2d2"/>
+            
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="65dp">
+       
+        <TextView
+            android:id="@+id/lblConfirmPasswd"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="确认密码"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtConfirmPasswd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblConfirmPasswd"
+            android:background="#ffffff"
+            android:hint="确认密码"
+            android:textColorHint="#d2d2d2"/>
+       
+
+    </RelativeLayout>
+   
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:padding="30px" >
+        
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffa800"
+        android:text="确定"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:onClick="postZhuceInfoOnClick"/>
+       
+    
+    </RelativeLayout>   
+
+</LinearLayout>

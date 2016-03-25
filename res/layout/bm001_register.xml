@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.itcast.pensonalcenter.LoginActivity" >
+
+    <RelativeLayout 
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="#24b69f">
+        
+        <ImageView
+     	    android:layout_width="15dip"
+     	    android:layout_height="20dip"
+    	    android:layout_marginTop="10dip"
+    	    android:layout_marginLeft="5dip"
+	    	android:layout_gravity="center"
+    	    android:src="@drawable/m01_jian_tou_left"
+ 	        android:onClick="backLoginOnClick"/>	  
+        
+        <TextView
+            android:id="@+id/shouye"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="注册"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true" />           
+       
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="65dp">
+       
+        <TextView
+            android:id="@+id/lblRegisterUser"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="用户名"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtRegisterUser"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblRegisterUser"
+            android:background="#ffffff"
+            android:hint="用户名/手机号"
+            android:textColorHint="#d2d2d2"/>
+            
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="65dp">
+       
+        <TextView
+            android:id="@+id/lblRegisterIdentifyingCode"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="验证码"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtRegisterIdentifyingCode"
+            android:layout_width="130dp"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblRegisterIdentifyingCode"
+            android:background="#ffffff"
+            android:hint="验证码"
+            android:textColorHint="#d2d2d2"/>
+       
+      <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="15px"
+        android:paddingRight="15px"
+        android:paddingTop="25px"
+        android:paddingBottom="25px"
+        android:layout_toRightOf="@id/txtRegisterIdentifyingCode"
+        android:background="#ffffff">
+        
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#24b69f"
+            android:text="发送验证码"
+            android:textSize="14sp"
+            android:textColor="#ffffff"
+            android:onClick="sendRegisterIdentifyingCodeOnClick"/>
+        
+        </RelativeLayout>
+         
+    </RelativeLayout>
+   
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="100dp"
+        android:padding="30px" >
+        
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffa800"
+        android:text="下一步 "
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:onClick="BmRegisterTwoActivityOnClick"
+        />
+       
+    </RelativeLayout>   
+
+</LinearLayout>
+

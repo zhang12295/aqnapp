@@ -1,0 +1,16 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	>
+
+<TextView
+    android:id="@+id/txtSpotName1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:textColor="#cccccc"
+     />
+
+
+</RelativeLayout>

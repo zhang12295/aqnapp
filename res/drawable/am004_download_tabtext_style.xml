@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView 
+      android:background="@drawable/am004_download_tab_bg" 
+      android:layout_width="match_parent" 
+      android:paddingTop="10dp" 
+      android:paddingBottom="10dp" 
+      android:layout_height="wrap_content" 
+      android:gravity="center" 
+      android:textSize="20dp" 
+      android:text="hello" 
+      android:textColor="@drawable/am004_download_tabtext_color" 
+      android:layout_marginRight="1dp" 
+      android:id="@+id/name" /> 
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="return_shouye">返回</string>
+    <string name="cityName">南京</string>
+    <string name="citySearch">搜索</string>
+    <drawable name="title_color">#24b69f</drawable>
+    <drawable name="listview_bg_color">#ceece7</drawable>
+    <drawable name="white_color">#ffffff</drawable>
+    <drawable name="red_color">#ff0000</drawable>
+    <drawable name="black_color">#000000</drawable>
+    	
+</resources>

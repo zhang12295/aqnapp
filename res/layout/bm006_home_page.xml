@@ -1,0 +1,239 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.njaqn.itravel.aqnapp.am.AM001HomePageActivity" >
+    
+    <RelativeLayout 
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="#24b69f">
+        
+        <ImageView
+     	    android:layout_width="15dip"
+     	    android:layout_height="20dip"
+    	    android:layout_marginTop="10dip"
+    	    android:layout_marginLeft="5dip"
+	    	android:layout_gravity="center"
+    	    android:src="@drawable/m01_jian_tou_left"
+ 	        android:onClick="backLoginOnClick"/>	  
+        
+        <TextView
+            android:id="@+id/shouye"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="个人中心"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true" />           
+       
+    </RelativeLayout>
+    
+    <ListView  
+        android:layout_below="@id/topMenu"
+        android:layout_width="100dp" 
+        android:layout_height="fill_parent" 
+        android:id="@+id/lvMenu"
+    />  
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/lvMenu"
+        android:layout_below="@id/topMenu"
+        >
+        <!-- 旅游规划（未做） -->
+    	<LinearLayout
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+    	    android:id = "@+id/menu0"
+    	    >
+    	    
+	        <TextView
+	            android:id="@+id/lblRegisterNewPasswd1"
+	            android:layout_width="110dp"
+	            android:layout_height="fill_parent"
+	            android:background="#ffffff"
+	            android:text="新密码"     
+	            android:gravity="center"
+	            android:textSize="20sp"
+	            />
+        	<EditText
+	            android:id="@+id/txtRegisterNewPasswd1"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:layout_toRightOf="@id/lblRegisterNewPasswd1"
+	            android:background="#ffffff"
+	            android:hint="请输入新密码"
+	            android:textColorHint="#d2d2d2"
+	            />
+		</LinearLayout>  
+    	
+    	<!-- 积分页面 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu1"
+      	 	>
+	    	<Button
+	    	    android:layout_width="fill_parent"
+	    	    android:layout_height="100dp"
+	    	    android:text="积分商城"	
+	    	    android:textSize="25sp"	    	    
+	    	    android:textColor="#000000"
+	    	    android:background="#ffff00"
+	    	    android:gravity="center"
+	    	    android:onClick="btnCreditShopOnClick"
+	    	    >
+	    	 </Button>
+	    	 <TextView
+	    	    android:layout_width="fill_parent"
+	    	    android:layout_height="100dp"
+	    	    android:text="我的积分"
+	    	    android:textSize="45sp"
+	    	    android:textColor="#000000"
+	    	    android:background="#ffffff"
+	    	    android:gravity="center"/>
+	    	 <LinearLayout
+	    	     android:orientation="horizontal"
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="150dp"
+	    	     >
+	    	 			 <LinearLayout
+	    	 			     android:orientation="vertical"
+	    	     			 android:layout_width="300dp"
+	    	     			 android:layout_height="fill_parent"
+	    	             >
+	    	 			     <TextView
+						    	    android:layout_width="fill_parent"
+						    	    android:layout_height="100dp"
+						    	    android:text="可兑换积分"
+						    	    android:textSize="25sp"
+						    	    android:textColor="#000000"
+						    	    android:background="#ffffff"
+						    	    android:gravity="center"/>
+	    	 			     
+	    	 			     <TextView
+						    	    android:layout_width="fill_parent"
+						    	    android:layout_height="50dp"
+						    	    android:text="冷冻积分"
+						    	    android:textSize="15sp"
+						    	    android:textColor="#000000"
+						    	    android:background="#ffffff"
+						    	    android:gravity="center"/>
+	    	 			 </LinearLayout>
+    	        		
+	    	 			 
+	    	 			 <Button
+	    	 			         android:layout_width="wrap_content"
+	    	 			         android:layout_height="wrap_content"
+	    	 			         android:text="立即获得"
+						    	 android:textSize="45px"
+						    	 android:textColor="#000000"
+						    	 android:background="#fff000"
+						    	 android:gravity="center">
+	    	 			 </Button>
+	    	 </LinearLayout>
+	    	
+    	</LinearLayout>    
+    	
+    	<!-- 购买景点 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu2"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="购买景点"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+	    
+    	<!-- 收藏 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu3"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="收藏"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+	    
+    	<!-- 分享 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu4"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="分享"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+	    
+    	<!-- 订单 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu5"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="订单"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+	    
+    	<!-- 我的社区 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu6"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="我的社区"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+	    
+    	<!-- 设置 -->
+    	<LinearLayout
+    	    android:orientation="vertical"
+    	    android:layout_width="match_parent" 
+	        android:layout_height="match_parent" 
+      	    android:id = "@+id/menu7"
+      	 	>
+	    	 <TextView
+	    	     android:layout_width="fill_parent"
+	    	     android:layout_height="fill_parent"
+	    	     android:text="设置"
+	    	     android:textColor="#000000">
+	    	 </TextView>
+	    </LinearLayout>
+    </FrameLayout>
+    
+</RelativeLayout>

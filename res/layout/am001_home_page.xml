@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/title_color" >
+
+        <Button
+            android:id="@+id/btnLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#24b69f"
+            android:drawableLeft="@drawable/am003_btn_dianji"
+            android:onClick="btnLocationOnClick"
+            android:paddingLeft="3dp"
+            android:text="南京"
+            android:textColor="@drawable/am003_btn_color" />
+
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/am001_search"
+            android:onClick="imgSearchOnClick" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/homeView"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:background="#f2f2f2"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/layoutMapView"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="switchMainContent" >
+
+            <ImageView
+                android:id="@+id/imgMapView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/am001_menu_a1"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutCommunityView"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="switchMainContent" >
+
+            <ImageView
+                android:id="@+id/imgCommunityView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/am001_menu_b0"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="switchPlayMode"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imgPlayView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/am001_menu_c1"
+                android:clickable="false" />
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutFacilityView"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="switchMainContent" >
+
+        <ImageView
+            android:id="@+id/imgFacilityView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/am001_menu_d0"
+            android:clickable="false" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutSelfView"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="switchMainContent" >
+
+        <ImageView
+            android:id="@+id/imgSelfView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/am001_menu_e0"
+            android:clickable="false" />
+    </RelativeLayout>
+
+</LinearLayout>
+
+</LinearLayout>

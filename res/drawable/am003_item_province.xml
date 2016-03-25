@@ -1,0 +1,20 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent"
+	android:layout_width="fill_parent"
+	android:id="@+id/am_item_sheng"
+	>
+<TextView
+	android:id="@+id/provinceName"
+	android:layout_height="50dp"
+	android:layout_width="fill_parent"
+ 	android:gravity="left|center"
+	android:paddingLeft="10dp"
+	android:text="hello"
+	android:textColor="@drawable/am003_select_item_font"
+    android:duplicateParentState="true"
+	android:textSize="22dp"
+	/>
+</LinearLayout>
+
+

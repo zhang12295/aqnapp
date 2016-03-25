@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.itcast.pensonalcenter.LoginActivity" >
+
+    <RelativeLayout 
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dip"
+        android:background="#24b69f">
+        
+        <ImageView
+ 	        android:layout_width="15dip"
+ 	        android:layout_height="20dip"
+ 	        android:layout_marginTop="10dip"
+ 	        android:layout_marginLeft="5dip"
+		    android:layout_gravity="center"
+ 	        android:src="@drawable/m01_jian_tou_left"
+ 	        android:onClick="backLoginOnClick "/>	  
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="会员登录"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:layout_centerVertical="true" />
+       
+       <Button
+            android:background="#24b69f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+	    	android:layout_centerVertical="true"
+	    	android:text="注册"
+    		android:textSize="20sp"
+	     	android:textColor="#ffffff"
+	    	android:onClick="btnBmRegisterActivityOnClick"/>
+       
+    </RelativeLayout>
+                 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bm005_loginad"/>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="55dp">
+       
+        <TextView
+            android:id="@+id/lblUser"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="用户名"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtUser"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblUser"
+            android:background="#ffffff"
+            android:hint="用户名/手机号"
+            android:textColorHint="#d2d2d2"/>
+            
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="55dp">
+       
+        <TextView
+            android:id="@+id/lblPasswd"
+            android:layout_width="110dp"
+            android:layout_height="fill_parent"
+            android:background="#ffffff"
+            android:text="密码"     
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/txtPasswd"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@id/lblPasswd"
+            android:background="#ffffff"
+            android:hint="6-20位字母、数字和字符"
+            android:textColorHint="#d2d2d2"/>
+    </RelativeLayout>
+    
+    <CheckBox
+        android:id="@+id/chkIsShow"  
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:text="显示密码"
+        android:textColor="#5b5b5b"/>
+    
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:paddingLeft="30px"
+        android:paddingRight="30px" >
+        
+    <Button
+        android:id="@+id/btnLogin"  
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffa800"
+        android:text="登录 "
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:onClick="btnloginOnClick"
+        />
+       
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="50dp">
+    
+        <Button
+            android:id="@+id/btnChangePasswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#eeeeee"
+            android:text="忘记密码？"
+            android:textSize="18sp"
+            android:textColor="#099fde"
+            android:layout_alignParentRight="true"
+        	android:onClick="btnChangePasswdOnClick"/>
+        
+    </RelativeLayout>
+
+</LinearLayout>
