@@ -8,7 +8,7 @@ public class AQNAppConst {
 	public static final String URL_BM = DNS+"/aqns/mb.do";  //
 	public static final String URL_CM = DNS+"/aqns/mc.do";  //
 	public static final String URL_DM = DNS+"/aqns/md.do";  //
-	public static final String URL_DB = DNS+"/aqns/db";
+	public static final String URL_DB = DNS+"/aqns/db.do";
 	public static final String URL_IMG = DNS+"/aqnimg";
 	
 	public static final int PAGEID_AM = 1;	

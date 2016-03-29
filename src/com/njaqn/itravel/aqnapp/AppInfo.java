@@ -11,12 +11,12 @@ import android.app.Application;
 public class AppInfo extends Application
 {
     private String city;
-    private int cityId;
+    private int cityId = 1;
     private String country;
     private int spotId;
     private int jingDianId;
 
-    public int getJingDianId()
+	public int getJingDianId()
     {
 	return jingDianId;
     }

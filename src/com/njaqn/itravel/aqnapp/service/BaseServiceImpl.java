@@ -144,8 +144,8 @@ public class BaseServiceImpl implements BaseService
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequest("province.id", "" + provinceId,
-		    AQNAppConst.PAGEID_AM_BASE, AQNAppConst.OP_AM_BASE_5);
+	    String r = http.postRequestForSql("select id,name,cityImage,keywords,flag from B_City where ProvinceID =" +
+	    		provinceId, AQNAppConst.DB_MANY_MANY);
 	    if (r.equals("Err"))
 		return null;
 
