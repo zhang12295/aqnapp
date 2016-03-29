@@ -53,7 +53,7 @@ public class AM003CityAdapter extends BaseAdapter {
 		ImageView imgCityImage = (ImageView) convertView.findViewById(R.id.imgCityImage);
 		TextView txtName = (TextView) convertView.findViewById(R.id.txtName);
 		TextView txtKeywords = (TextView) convertView.findViewById(R.id.txtKeywords);
-		TextView txtFlag = (TextView) convertView.findViewById(R.id.txtFlag);
+		//TextView txtFlag = (TextView) convertView.findViewById(R.id.txtFlag);
 	
 		HashMap<String, Object> data = (HashMap<String, Object>) lstData.get(position);
 		String cityImage = data.get("cityImage").toString();
@@ -69,14 +69,14 @@ public class AM003CityAdapter extends BaseAdapter {
 		
 		txtName.setText(data.get("name").toString());
 		
-		if(flag==1) //已开通城市
-		{
-			txtFlag.setText("已开通");
-		}
-		else
-		{
-			txtFlag.setText("未开通");
-		}
+//		if(flag==1) //已开通城市
+//		{
+//			txtFlag.setText("已开通");
+//		}
+//		else
+//		{
+//			txtFlag.setText("未开通");
+//		}
 		txtKeywords.setText(data.get("keywords").toString());
 		return convertView;
 	}

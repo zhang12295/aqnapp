@@ -4,79 +4,79 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.njaqn.itravel.aqnapp.am.AM002SearchActivity" >
-    
-       <RelativeLayout 
+
+    <RelativeLayout
         android:id="@+id/topMenu"
         android:layout_width="fill_parent"
         android:layout_height="45dip"
-        android:background="#24b69f">
-        
-        <ImageView
- 	    android:id="@+id/jiantou_l1"
- 	    android:layout_width="15dip"
- 	    android:layout_height="20dip"
- 	    android:layout_marginTop="10dip"
- 	    android:layout_marginLeft="5dip"
-		android:layout_gravity="center"
- 	    android:src="@drawable/m01_jian_tou_left"
- 	    />
-       </RelativeLayout>
-       
-    
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="45dp"
-		android:orientation="horizontal"
-		android:id="@+id/search"
-		android:layout_below="@id/topMenu">
+        android:background="#24b69f" >
 
-		<!-- 输入的搜索信息 -->
-		<EditText
-		    android:id="@+id/et_search"
-			android:layout_weight="4"
-			android:layout_width="0dp"
-			android:layout_height="fill_parent"
-			android:imeOptions="actionSearch"
-			android:textColor="#0e0e0e"
-			android:textSize="17sp"
-			android:singleLine="true"
-			android:hint="搜索"
-			android:textColorHint="#b0c6ce"
-			android:drawableLeft="@drawable/am001_search"
-			android:gravity="center_vertical"
-			android:background="@drawable/am002_search_sharp"
-			android:layout_marginLeft="10dip"
-			android:layout_marginRight="10dip"
-			android:layout_marginTop="5dip"
-			android:layout_marginBottom="5dip"/>
- 
- 			<!-- 清空搜索文字按钮 -->
-			<LinearLayout
-			android:id="@+id/layout_clear"
-			android:layout_weight="0.5"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"
-			android:orientation="horizontal">
-			<ImageButton
-				android:id="@+id/btn_clear"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="right|center_vertical"
-				android:src="@drawable/am001_search"/>
-		</LinearLayout>
-	</LinearLayout>
+        <ImageView
+            android:id="@+id/jiantou_l1"
+            android:layout_width="15dip"
+            android:layout_height="20dip"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="10dip"
+            android:src="@drawable/m01_jian_tou_left" />
+        <TextView
+          android:id="@+id/search_spot"
+          android:layout_width="wrap_content"
+          android:layout_height="30dp"
+          android:layout_alignBottom="@+id/imageButton1"
+          android:layout_centerInParent="true"
+          android:text="景区搜索"
+          android:textColor="#ffffff"
+          android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/topMenu"
+        android:orientation="horizontal" >
+
+        <!-- 输入的搜索信息 -->
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dip"
+            android:layout_weight="1.10"
+            android:background="@drawable/am002_search_sharp"
+            android:drawableLeft="@drawable/am001_search"
+            android:gravity="center_vertical"
+            android:hint="搜索"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textColor="#0e0e0e"
+            android:textColorHint="#b0c6ce"
+            android:textSize="17sp" />
+        <ImageButton 
+            android:src="@drawable/am001_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <!-- 清空搜索文字按钮 -->
+
+        
+    </LinearLayout>
 
     <TabHost
+        android:id="@+id/tabhost"
         android:layout_width="match_parent"
-    	android:layout_height="match_parent"
-    	android:layout_below="@id/search"
-    	android:id="@+id/tabhost">
-    	
-        <LinearLayout 
-        	android:layout_width="match_parent"
-    		android:layout_height="match_parent"
-    		android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_below="@id/search" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
             <TabWidget
                 android:id="@android:id/tabs"
@@ -84,52 +84,58 @@
                 android:layout_height="wrap_content" >
             </TabWidget>
 
-    		<FrameLayout 
-    		     android:layout_width="match_parent"
-    			 android:layout_height="match_parent"
-    			 android:id="@android:id/tabcontent">
-    		    <LinearLayout
-    		        android:layout_width="match_parent"
-    			    android:layout_height="match_parent" 
-    			    android:id="@+id/remen">
-    		    	<TextView
-    		    	    android:layout_width="match_parent"
-    			    	android:layout_height="wrap_content"
-    			    	android:text="热门景点"/>
-    		    </LinearLayout>
-    		    	
-    		     <LinearLayout
-    		        android:layout_width="match_parent"
-    			    android:layout_height="match_parent"
-    			    android:id="@+id/fujin">
-    		    	<TextView
-    		    	    android:layout_width="match_parent"
-    			    	android:layout_height="wrap_content"
-    			    	android:text="附近景点"/>
-    		    </LinearLayout>
-    		    
-    		     <LinearLayout
-    		        android:layout_width="match_parent"
-    			    android:layout_height="match_parent"
-    			    android:orientation="horizontal"
-    			    android:id="@+id/quanguo">
-    		    	<ListView
-    		    	    android:id="@+id/lvPrivince"
-    		    	    android:layout_width="100dip"
-    			    	android:layout_height="match_parent"/>
-    		    	<ListView
-    		    	    android:id="@+id/lvCity"
-    		    	    android:layout_width="match_parent"
-    			    	android:layout_height="match_parent"/>
-    		    	
-    		    </LinearLayout>
-    		    
-    		</FrameLayout>
-            
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:id="@+id/remen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <ListView 
+                        android:id="@+id/lv_hotspot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fujin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    
+                    <ListView 
+                        android:id="@+id/lv_nearbyspot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        
+                    </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/quanguo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+
+                    <ListView
+                        android:id="@+id/lvPrivince"
+                        android:layout_width="100dip"
+                        android:layout_height="match_parent" />
+
+                    <ListView
+                        android:id="@+id/lvCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
-        
     </TabHost>
-    
-     
+
+
 
 </RelativeLayout>

@@ -12,9 +12,7 @@
         android:ellipsize="end"
         android:lines="5"
         android:lineSpacingExtra="3dp"
-        android:textColor="#8c8184" 
-        android:text="adfkalsdfj发士大夫的fads啊发的副会长啊看得见伐啊服务局欸哦去附近啊李开复【轻风啊加快立法；阿斗发觉我客气姐夫可我【风景老费金额开具求佛能够让卡估计阿里贷款首付进而为国家很快乐发那个"/>
-
+        android:textColor="#8c8184" />
     <ImageView
         android:layout_width="200dp"
         android:layout_height="1dp" 
