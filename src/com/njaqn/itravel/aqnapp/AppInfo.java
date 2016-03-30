@@ -6,7 +6,10 @@ import com.njaqn.itravel.aqnapp.service.bean.BCityBean;
 import com.njaqn.itravel.aqnapp.service.bean.BCountryBean;
 import com.njaqn.itravel.aqnapp.service.bean.BProvinceBean;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class AppInfo extends Application
 {
@@ -15,7 +18,9 @@ public class AppInfo extends Application
     private String country;
     private int spotId;
     private int jingDianId;
-
+    private int countryId;
+    private SharedPreferences sp ;
+    private Editor editor ;
     public int getJingDianId()
     {
 	return jingDianId;
@@ -66,16 +71,44 @@ public class AppInfo extends Application
 
     public void setCity(String city)
     {
-	this.city = city;
+	sp = getSharedPreferences("appInfo", Activity.MODE_PRIVATE);
+	editor = sp.edit();
 	BaseService bs = new BaseServiceImpl();
-	BCityBean cb = bs.getCityByName(city);
+	BCityBean cb;
+	if(city != null)
+	{
+	    this.city = city;
+	    editor.putString("city", city);
+	    editor.commit();
+	    cb = bs.getCityByName(city);
+	}
+	else
+	{
+	    this.city = sp.getString("city", "ÄÏ¾©");
+	    cb = bs.getCityByName(this.city);
+	}
+	
 	if (cb != null)
 	{
 	    this.cityId = cb.getId();
+	    editor.putInt("cityId", cb.getId());
+	   
+	    BProvinceBean pb = bs.getProvinceByCityId(cityId);
+	    BCountryBean countryBean = bs.getCountryByProvinceId(pb.getId());
+	    this.countryId = countryBean.getId();
+	    editor.putInt("countryId", countryBean.getId());
+	    this.country = countryBean.getName();
+	    editor.putString("countryName", countryBean.getName());
+	    editor.commit();
+	}
+	else
+	{
+	    this.cityId = sp.getInt("cityId", 1);
 	    BProvinceBean pb = bs.getProvinceByCityId(cityId);
 	    BCountryBean countryBean = bs.getCountryByProvinceId(pb.getId());
 	    this.countryId = countryBean.getId();
 	    this.country = countryBean.getName();
+	    
 	}
     }
 
@@ -109,5 +142,4 @@ public class AppInfo extends Application
 	this.countryId = countryId;
     }
 
-    private int countryId;
 }

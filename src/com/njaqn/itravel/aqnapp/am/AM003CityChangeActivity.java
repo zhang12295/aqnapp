@@ -1,30 +1,21 @@
 package com.njaqn.itravel.aqnapp.am;
 
-/**
- *×÷Õß£ºÇØÑÇ·É
- * 
- * */
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
-import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
 import com.njaqn.itravel.aqnapp.service.BaseService;
 import com.njaqn.itravel.aqnapp.service.BaseServiceImpl;
 import com.njaqn.itravel.aqnapp.service.adapter.AM003CityAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 public class AM003CityChangeActivity extends Activity
 {

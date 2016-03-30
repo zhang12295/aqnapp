@@ -6,17 +6,31 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/txtName"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:textColor="#8c8184"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:background="#efefef" />
+
+    <TextView
         android:id="@+id/txtIntro"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:ellipsize="end"
-        android:lines="5"
         android:lineSpacingExtra="3dp"
+        android:lines="5"
         android:textColor="#8c8184" />
+
     <ImageView
         android:layout_width="200dp"
-        android:layout_height="1dp" 
-        android:background="#efefef"/>
+        android:layout_height="1dp"
+        android:background="#efefef" />
 
     <LinearLayout
         android:layout_width="200dp"
