@@ -18,15 +18,11 @@ public class AppInfo extends Application
     private String country;
     private int spotId;
     private int jingDianId;
-<<<<<<< HEAD
     private int countryId;
     private SharedPreferences sp ;
     private Editor editor ;
-    public int getJingDianId()
-=======
 
 	public int getJingDianId()
->>>>>>> e89d573c2809a3eb48f56b2d06ffd24c53e158cf
     {
 	return jingDianId;
     }
