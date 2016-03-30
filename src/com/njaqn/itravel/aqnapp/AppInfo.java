@@ -14,14 +14,15 @@ import android.content.SharedPreferences.Editor;
 public class AppInfo extends Application
 {
     private String city;
-    private int cityId;
+    private int cityId = 1;
     private String country;
     private int spotId;
     private int jingDianId;
     private int countryId;
     private SharedPreferences sp ;
     private Editor editor ;
-    public int getJingDianId()
+
+	public int getJingDianId()
     {
 	return jingDianId;
     }

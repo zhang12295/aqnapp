@@ -1,6 +1,3 @@
-/**
- *    ×÷Õß£ºÃ«ÆäÁÖ
- */
 package com.njaqn.itravel.aqnapp.am;
 
 import com.njaqn.itravel.aqnapp.bm.BM005LoginActivity;
@@ -52,18 +49,18 @@ public class AM001HomePageActivity extends Activity
 	super.onCreate(savedInstanceState);
 
 	PlayAuditData data = new PlayAuditData();
-	app = (AppInfo) getApplication(); // »ñÈ¡Ó¦ÓÃ³ÌĞò
-	// ³õÊ¼»¯ÓïÒô¹¦ÄÜÀà
+	app = (AppInfo) getApplication(); // è·å–Application
+	// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	vutil = new VoiceUtil(this.getApplicationContext(), data);
 
 	map = new MapUtil(this.getApplicationContext(), data, app,vutil);
 	setContentView(R.layout.am001_home_page);
 
-	// ¶¯»­ÉèÖÃ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 	animation.setFillAfter(true);
 
-	// ³õÊ¼»¯¸÷¸ö¿Ø¼ş
+	// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½
 	initView();
 	setEvent(0);
 
@@ -74,12 +71,12 @@ public class AM001HomePageActivity extends Activity
 	imgPlayView.setAnimation(animation);
 	imgPlayView.startAnimation(animation);
     }
-    // ¿ØÖÆÓïÒô²¥·Å
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void switchPlayMode(View v)
     {
 	if (vutil != null)
 	{
-	    // playMode±íÊ¾²¥·ÅÄ£Ê½£¬0±íÊ¾Î´²¥·Å£¬1±íÊ¾ÕıÔÚ²¥·Å£¬2±íÊ¾ÔİÍ£
+	    // playModeï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½0ï¿½ï¿½Ê¾Î´ï¿½ï¿½ï¿½Å£ï¿½1ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Å£ï¿½2ï¿½ï¿½Ê¾ï¿½ï¿½Í£
 	    if (vutil.getPlayMode() == 0)
 	    {
 		vutil.start();
@@ -106,7 +103,7 @@ public class AM001HomePageActivity extends Activity
 	}
     }
 
-    // ÇĞ»»Ö÷ÊÓÍ¼
+    // ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
     public void switchMainContent(View v)
     {
 	setDefaultImage();
@@ -228,7 +225,7 @@ public class AM001HomePageActivity extends Activity
 	startActivity(login);
     }
 
-    // È¡µÃ³ÇÊĞÇĞ»»activity´«À´µÄÊı¾İ
+    // È¡ï¿½Ã³ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½activityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
 	super.onActivityResult(requestCode, resultCode, data);
@@ -249,7 +246,7 @@ public class AM001HomePageActivity extends Activity
 	imgSelfView.setBackgroundResource(R.drawable.am001_menu_e0);
     }
 
-    // ³õÊ¼»¯viewÖĞµÄÊ¹ÓÃµ½µÄ¿Ø¼ş
+    // ï¿½ï¿½Ê¼ï¿½ï¿½viewï¿½Ğµï¿½Ê¹ï¿½Ãµï¿½ï¿½Ä¿Ø¼ï¿½
     private void initView()
     {
 	imgPlayView = (ImageView) findViewById(R.id.imgPlayView);
