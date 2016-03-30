@@ -66,9 +66,10 @@ public class M01WelComeActivity extends Activity
 	    }
 	};
 
-	String waitTimes = conf.getAppConfig(conf.WELCOME_WAIT_TIMES);
-	if (waitTimes == null)
-	    waitTimes = "3";
+//	String waitTimes = conf.getAppConfig(conf.WELCOME_WAIT_TIMES);
+//	if (waitTimes == null)
+//	    waitTimes = "1";
+	String waitTimes = "1";
 
 	int times = new Integer(waitTimes).intValue();
 	timer.schedule(task, times * 1000);

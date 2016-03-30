@@ -5,27 +5,48 @@ import java.util.List;
 
 import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
-import com.njaqn.itravel.aqnapp.service.BaseService;
-import com.njaqn.itravel.aqnapp.service.BaseServiceImpl;
+import com.njaqn.itravel.aqnapp.util.AQNAppConst;
+import com.njaqn.itravel.aqnapp.util.ImageDownLoader;
+import com.njaqn.itravel.aqnapp.util.ImageDownLoader.onImageLoaderListener;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AbsListView.OnScrollListener;
 
 
-public class AM003CityAdapter extends BaseAdapter {
+public class AM003CityAdapter extends BaseAdapter implements OnScrollListener {
 
+	private Context context;
 	private List<HashMap<String,Object>> lstData;
-	private LayoutInflater inflater;
+	private LayoutInflater mInflater;
+	private ListView mListView;
+	private int mStart,mEnd;
+	public static String[] URLS;
+	private boolean mFirstIn;
+	private ImageDownLoader mImageDownLoader;
 	
-	public AM003CityAdapter(Context context, List<HashMap<String,Object>> lstData)
+	public AM003CityAdapter(AppInfo app,Context context, List<HashMap<String,Object>> lstData,ListView listView)
 	{
 		this.lstData = lstData;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.context = context;
+		mInflater = LayoutInflater.from(context);
+		mImageDownLoader = new ImageDownLoader(context);
+		mListView = listView;
+		URLS = new String[lstData.size()];
+		for (int i = 0; i < lstData.size(); i++) {
+			URLS[i] = AQNAppConst.URL_IMG+lstData.get(i).get("cityImage").toString();
+		}
+		mFirstIn = true;
+		listView.setOnScrollListener(this);
 	}
 	
 	@Override
@@ -43,42 +64,102 @@ public class AM003CityAdapter extends BaseAdapter {
 		return position;
 	}
 	
+	class ViewHolder{
+		public TextView txtName,txtKeywords,txtFlag;
+		public ImageView imgCityImage;
+	}
 	public View getView(int position, View convertView, ViewGroup parent) 
 	{	
+		ViewHolder viewHolder = null;
 		if(convertView == null)
 		{
-			convertView = inflater.inflate(R.drawable.am003_item_city, null); //Éú³ÉÌõÄ¿½çÃæ¶ÔÏó
+			viewHolder = new ViewHolder();
+			convertView = mInflater.inflate(R.layout.am003_item_city, null);
+			viewHolder.imgCityImage = (ImageView) convertView.findViewById(R.id.imgCityImage);
+			viewHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
+			viewHolder.txtKeywords = (TextView) convertView.findViewById(R.id.txtKeywords);
+			//viewHolder.txtFlag = (TextView) convertView.findViewById(R.id.txtFlag);
+			convertView.setTag(viewHolder);
+			
+		}else {
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		
-		ImageView imgCityImage = (ImageView) convertView.findViewById(R.id.imgCityImage);
-		TextView txtName = (TextView) convertView.findViewById(R.id.txtName);
-		TextView txtKeywords = (TextView) convertView.findViewById(R.id.txtKeywords);
-		//TextView txtFlag = (TextView) convertView.findViewById(R.id.txtFlag);
-	
-		HashMap<String, Object> data = (HashMap<String, Object>) lstData.get(position);
-		String cityImage = data.get("cityImage").toString();
-		
-		int flag =  Integer.parseInt(data.get("flag").toString());
-		
-		BaseService bs = new BaseServiceImpl();
-		
-		if(!cityImage.equals(""))	
-		{
-			imgCityImage.setImageBitmap(bs.getImageByUrl(cityImage));
+		viewHolder.imgCityImage.setImageResource(R.drawable.ic_launcher);
+		String url = lstData.get(position).get("cityImage").toString();
+		if (!url.equals("")) {
+			url = AQNAppConst.URL_IMG + url;
+			viewHolder.imgCityImage.setTag(url);
+			Bitmap bitmap = mImageDownLoader.showCacheBitmap(url.replaceAll("[^\\w]", ""));
+			if(bitmap != null){
+				viewHolder.imgCityImage.setImageBitmap(bitmap);
+			}		
 		}
+		viewHolder.txtKeywords.setText(lstData.get(position).get("keywords").toString());
+		viewHolder.txtName.setText(lstData.get(position).get("name").toString());
+		Log.i("viewHolder", lstData.get(position).get("name").toString()+":"+viewHolder.hashCode());
+		int flag =  Integer.parseInt(lstData.get(position).get("flag").toString());
 		
-		txtName.setText(data.get("name").toString());
-		
-//		if(flag==1) //ÒÑ¿ªÍ¨³ÇÊÐ
+//		if(flag==1) //å¼€é€šæœåŠ¡
 //		{
-//			txtFlag.setText("ÒÑ¿ªÍ¨");
+//			viewHolder.txtFlag.setText("å·²å¼€é€š");
 //		}
 //		else
 //		{
-//			txtFlag.setText("Î´¿ªÍ¨");
+//			viewHolder.txtFlag.setText("æ²¡å¼€é€š");
 //		}
-		txtKeywords.setText(data.get("keywords").toString());
 		return convertView;
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		mStart = firstVisibleItem;
+		mEnd = visibleItemCount+firstVisibleItem;
+		if(mFirstIn && visibleItemCount>0){
+			showImage(mStart, mEnd);
+			mFirstIn = false;
+		}
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		if(scrollState == SCROLL_STATE_IDLE){
+			showImage(mStart, mEnd);
+		}else{
+			cancelTask();
+		}
+		
+	}
+	
+	private void showImage(int start, int end){
+		Bitmap bitmap = null;
+		for(int i=start; i<end; i++){
+			String mImageUrl = URLS[i];
+			final ImageView mImageView = (ImageView) mListView.findViewWithTag(mImageUrl);
+			bitmap = mImageDownLoader.downloadImage(mImageUrl, new onImageLoaderListener() {
+				
+				@Override
+				public void onImageLoader(Bitmap bitmap, String url) {
+					if(mImageView != null && bitmap != null){
+						mImageView.setImageBitmap(bitmap);
+					}
+					
+				}
+			});
+			
+			if(bitmap != null){
+				mImageView.setImageBitmap(bitmap);
+			}else{
+				mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+			}
+		}
+	}
+
+	/**
+	 * å–æ¶ˆä»»åŠ¡
+	 */
+	public void cancelTask(){
+		mImageDownLoader.cancelTask();
 	}
 
 }
