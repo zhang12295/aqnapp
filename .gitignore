@@ -44,3 +44,6 @@ Temporary Items
 *.class
 *.apk
 *.dex
+*.ap_
+*.jar
+bin\res\crunch\*
