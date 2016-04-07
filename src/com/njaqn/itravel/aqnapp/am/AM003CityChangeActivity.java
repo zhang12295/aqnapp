@@ -97,9 +97,19 @@ public class AM003CityChangeActivity extends Activity
 	initCityData();
 	laodProvinceData();
 
+<<<<<<< HEAD
 	lvProvinceAm003.setOnItemClickListener(new ProvinceItemClickListener());
 	lvCityAm003.setOnItemClickListener(new CityItemClickListener());
 	searchButton.setOnClickListener(new SearchClickListener());
+=======
+		lvProvinceAm003 = (ListView) this.findViewById(R.id.lvProvinceAm003);
+		lvCityAm003 = (ListView) this.findViewById(R.id.lvCityAm003);
+		searchButton = (ImageButton) this.findViewById(R.id.citychange_btn_search);
+		searchEditText = (EditText) this.findViewById(R.id.search);
+		lvCityAm003.setDividerHeight(0);
+		initCityData();
+		laodProvinceData();
+>>>>>>> origin/master
 
     }
 
