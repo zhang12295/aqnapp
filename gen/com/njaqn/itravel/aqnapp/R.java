@@ -152,6 +152,7 @@ public final class R {
         public static final int hot_spot8=0x7f090022;
         public static final int hot_spot9=0x7f090023;
         public static final int imageButton1=0x7f09002f;
+        public static final int imageButtonBack=0x7f090012;
         public static final int imgCityImage=0x7f090035;
         public static final int imgCommunityView=0x7f090008;
         public static final int imgFacilityView=0x7f09000b;
@@ -178,7 +179,6 @@ public final class R {
         public static final int imgStop=0x7f090054;
         public static final int imgWelcome=0x7f09007b;
         public static final int init_view=0x7f090019;
-        public static final int jiantou_l1=0x7f090012;
         public static final int jingdian=0x7f09008c;
         public static final int layoutCommunityView=0x7f090007;
         public static final int layoutFacilityView=0x7f09000a;

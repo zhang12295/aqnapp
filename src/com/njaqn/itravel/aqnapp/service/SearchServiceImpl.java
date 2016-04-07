@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.njaqn.itravel.aqnapp.util.AQNAppConst;
 import com.njaqn.itravel.aqnapp.util.UrlHttp;
 
@@ -95,6 +97,39 @@ public class SearchServiceImpl implements SearchService {
 			return lst;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getNearbySpot(double Longitude,
+			double Latitude, int maxSpotNum) {
+		try
+		{
+		    UrlHttp http = new UrlHttp();
+		    String r = http.postRequestForSql("select top "+maxSpotNum+" id,jc from J_Spot where Longitude is not null order by dbo.fnGetDistance("+Longitude
+					+" , "+Latitude+",longitude,latitude)", AQNAppConst.DB_MANY_MANY);
+		    if (r.equals("Err"))
+			return null;
+
+		    JSONArray json = new JSONArray(r);
+
+		    List<HashMap<String, Object>> lst = new ArrayList<HashMap<String, Object>>();
+		    for (int i = 0; i < json.length(); i++)
+		    {
+			JSONObject obj = json.getJSONObject(i);
+			HashMap<String, Object> spotData = new HashMap<String, Object>();
+			spotData.put("id", obj.getInt("id"));
+			spotData.put("name", obj.getString("jc"));
+			lst.add(spotData);
+		    }
+
+		    return lst;
+		}
+		catch (Exception ex)
+		{
+		    Log.e("Err", ex.getMessage());
 		}
 
 		return null;
