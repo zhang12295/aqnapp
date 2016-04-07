@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.njaqn.itravel.aqnapp.service.bean.JSpotBean;
 import com.njaqn.itravel.aqnapp.service.bean.JingDianBean;
 import com.njaqn.itravel.aqnapp.service.bean.PlayFileBean;
@@ -40,4 +42,6 @@ public interface AmService
     public List<JSpotBean> getSpotLocationByCityId(int cityId);
 
     public String getSpotIntroById(int id);
+
+    public JSONObject judgeLocation(double d, double e);
 }

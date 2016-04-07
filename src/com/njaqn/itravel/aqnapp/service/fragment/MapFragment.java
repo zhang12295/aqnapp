@@ -1,7 +1,6 @@
 package com.njaqn.itravel.aqnapp.service.fragment;
 
 import com.baidu.mapapi.map.MapView;
-import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
 import com.njaqn.itravel.aqnapp.util.MapUtil;
 

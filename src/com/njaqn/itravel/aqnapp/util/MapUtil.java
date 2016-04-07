@@ -3,14 +3,15 @@ package com.njaqn.itravel.aqnapp.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ import com.njaqn.itravel.aqnapp.service.AmService;
 import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
 import com.njaqn.itravel.aqnapp.service.bean.AQNPointer;
 import com.njaqn.itravel.aqnapp.service.bean.JSpotBean;
+import com.njaqn.itravel.aqnapp.service.bean.JingDianBean;
 import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
 
@@ -55,8 +57,10 @@ public class MapUtil extends Activity
     private AppInfo app;
     private Button btnLocation;
     private VoiceUtil vUtil;
-    private Context activityContext;
 
+    private ButtonClickListener btnClick;
+    private AmService aService = new AmServiceImpl();
+    
     public MapUtil(Context ctx, PlayAuditData data, AppInfo app, VoiceUtil vUtil)
     {
 	this.data = data;
@@ -71,46 +75,86 @@ public class MapUtil extends Activity
 	this.btnLocation = btnLocation;
     }
 
-    public void setMapMarker(int iconResource, LatLng point, String id,
-	    Bundle info)
+    public void setMapMarker(int iconResource, LatLng point, Bundle info)
     {
 	BitmapDescriptor bitmap = BitmapDescriptorFactory
 		.fromResource(iconResource);
 	OverlayOptions option = new MarkerOptions().position(point)
-		.icon(bitmap).zIndex(0).period(25).title(id).extraInfo(info);
+		.icon(bitmap).zIndex(0).period(25).extraInfo(info);
 	map.addOverlay(option);
     }
 
-    public void setPopMarker(LatLng point, final String text)
+    public void setPopMarker(LatLng point, Bundle info)
     {
 	// 创建InfoWindow展示的view
-	LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	LayoutInflater inflater = (LayoutInflater) ctx
+		.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	View v = inflater.inflate(R.layout.am001_map_popview, null);
-	
+
 	ImageButton button = (ImageButton) v.findViewById(R.id.btnPlayAudio);
-	button.setOnClickListener(new OnClickListener()
+	ImageButton enter = (ImageButton) v.findViewById(R.id.btnEnter); 
+	if(btnClick != null)
 	{
-	    
-	    
-	     @Override
-	    public void onClick(View v)
-	    {
-		 if(vUtil.getPlayMode() == 1 || vUtil.getPlayMode() == 2)
-		 {
-		     vUtil.playStop();
-		     vUtil.setPlayMode(0);
-		 }
-		 vUtil.playAudio(text);
-		
-	    }
-	});
+	    btnClick = null;
+	}
+	btnClick = new ButtonClickListener(info);
+	enter.setOnClickListener(btnClick);
+	button.setOnClickListener(btnClick);
 	TextView textView = (TextView) v.findViewById(R.id.txtIntro);
-	textView.setText(text);
+	TextView txtName = (TextView) v.findViewById(R.id.txtName);
+	txtName.setText(info.getString("name"));
+	textView.setText(info.getString("intro"));
 
 	// 创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
 	InfoWindow mInfoWindow = new InfoWindow(v, point, -27);
 	map.showInfoWindow(mInfoWindow);
     }
+    
+    private final class ButtonClickListener implements OnClickListener
+    {
+
+	private Bundle info; 
+	public ButtonClickListener(Bundle info)
+	{
+	    this.info = info;
+	}
+
+	@Override
+    	public void onClick(View v)
+	{
+	    switch (v.getId())
+	    {
+	    	case R.id.btnPlayAudio:
+	    	    if (vUtil.getPlayMode() == 1 || vUtil.getPlayMode() == 2)
+		    {
+			vUtil.playStop();
+		    }
+		    vUtil.playAudio(info.getString("intro"));
+		    break;
+
+	    	case R.id.btnEnter:
+	    	    
+	    	    if(info.getString("type").equals("spot"))
+	    	    {
+	    		map.clear();
+	    		try
+			{
+	    		    setJingDianPointer(info.getInt("id"));
+			}
+			catch (Exception e)
+			{
+			    e.printStackTrace();
+			}
+	    		
+	    	    }
+	    	   
+		break;
+	    }
+	    
+
+	}
+    }
+	
 
     // 添加覆盖物的点
     public void setCurrLocationMarker()
@@ -173,7 +217,7 @@ public class MapUtil extends Activity
 
 	    if (location.getLocType() == BDLocation.TypeNetWorkLocation)
 		locationAddress = location.getAddrStr();
-
+	    // 判断用户是否在景点中
 	    if (isFristLoc)
 	    {
 		isFristLoc = false;
@@ -182,7 +226,7 @@ public class MapUtil extends Activity
 		data.setLocationInfo(province, city, locationAddress,
 			locationLatLng);
 		// setCurrLocationMarker(); // 设置闪烁的图标
-		//setPopMarker(locationLatLng, locationAddress);
+		// setPopMarker(locationLatLng, locationAddress);
 		// LatLng l1 = new
 		// LatLng(location.getLatitude()+0.01,location.getLongitude()+0.01);
 		// setMapMarker(R.drawable.ic_launcher,l1);
@@ -195,21 +239,21 @@ public class MapUtil extends Activity
 		map.setOnMarkerClickListener(new MarkerListener());
 
 		//
-		map.setOnMapClickListener(new ClickListener());
-		// 标志景区位置
-		setSpotMark();
+		map.setOnMapClickListener(new MapClickListener());
+		// 根据用户所在位置动态选取景区或者景点
+		setMark(location);
 	    }
 	}
     }
 
-    private final class ClickListener implements OnMapClickListener
+    private final class MapClickListener implements OnMapClickListener
     {
 
 	@Override
 	public void onMapClick(LatLng arg0)
 	{
 	    map.hideInfoWindow();
-	    
+
 	}
 
 	@Override
@@ -218,25 +262,27 @@ public class MapUtil extends Activity
 	    // TODO Auto-generated method stub
 	    return false;
 	}
-	
+
     }
+
     private final class MarkerListener implements OnMarkerClickListener
     {
 
 	@Override
 	public boolean onMarkerClick(Marker arg0)
 	{
-	    AmService aService = new AmServiceImpl();
 	    Bundle bundle = arg0.getExtraInfo();
 	    String type = bundle.getString("type");
-	    int id = Integer.parseInt(arg0.getTitle());
 	    if (type.equals("spot"))
 	    {
-		setPopMarker(arg0.getPosition(),aService.getSpotIntroById(id));
-		
+		setPopMarker(arg0.getPosition(), bundle);
+	    }
+	    else if(type.equals("jingDian"))
+	    {
+		setPopMarker(arg0.getPosition(),bundle);
 	    }
 
-	    return false;
+	    return true;
 	}
 
     }
@@ -257,6 +303,13 @@ public class MapUtil extends Activity
 	cli.setLocOption(option);
     }
 
+    public void judgeUserLocation(BDLocation location)
+    {
+	AmService as = new AmServiceImpl();
+	// as.judgeSpot
+
+    }
+
     public static AQNPointer getCurrGPSPointer()
     {
 	return null;
@@ -268,23 +321,63 @@ public class MapUtil extends Activity
 	map.setMyLocationEnabled(false);
     }
 
-    private void setSpotMark()
+    private void setMark(BDLocation location)
     {
 	int currentCityId = app.getCityId();
-	AmService aService = new AmServiceImpl();
 	List<JSpotBean> spots = new ArrayList<JSpotBean>();
-	spots = aService.getSpotLocationByCityId(currentCityId);
-	if (spots != null)
+	JSONObject locationSpot = aService.judgeLocation(location.getLongitude(), location.getLatitude());
+	try
 	{
-	    for (JSpotBean i : spots)
+	    if (locationSpot.getInt("distance") < 100)
 	    {
-		LatLng latlng = new LatLng(Double.parseDouble(i.getLatitude()),
-			Double.parseDouble(i.getLongitude()));
+		// 说明用户在景区内显示该景区内的景点
+		vUtil.playAudio("您现在所在的景区是"+locationSpot.getString("name"));
+		setJingDianPointer(locationSpot.getInt("ID"));
+	    }
+	  //否则显示当前城市所有景区
+	  else
+	  {	
+	      vUtil.playAudio("您现在不在任何景区");
+	      spots = aService.getSpotLocationByCityId(currentCityId);
+	      if (spots != null)
+	      {
+		  for (JSpotBean i : spots)
+		  {
+		      LatLng latlng = new LatLng(Double.parseDouble(i.getLatitude()), Double.parseDouble(i
+	  			                  .getLongitude()));
+	  	    Bundle bundle = new Bundle();
+	 	    bundle.putString("type", "spot");
+	 	    bundle.putString("name", i.getName());
+	 	    bundle.putInt("id", i.getId());
+	 	    bundle.putString("intro", i.getIntro());
+	 	    setMapMarker(R.drawable.am001_map_spot, latlng, bundle);
+		  }
+	    }
+	 }
+	}
+	catch (Exception e)
+	{
+	    e.printStackTrace();
+	}
+    }
+
+    private void setJingDianPointer(int ID) throws JSONException
+    {
+	List<JingDianBean> jingDians = aService
+		.getAllJingDianBySpotId(ID);
+	if (jingDians != null)
+	{
+	    for (JingDianBean i : jingDians)
+	    {
+		LatLng latlng = new LatLng(i.getLatitude(), i.getLongitude());
 		Bundle bundle = new Bundle();
-		bundle.putString("type", "spot");
-		setMapMarker(R.drawable.am001_map_spot, latlng, i.getId() + "",
-			bundle);
+		bundle.putString("type", "jingDian");
+		bundle.putString("intro", i.getIntro());
+		bundle.putString("name",i.getName() );
+		bundle.putInt("id", i.getId());
+		setMapMarker(R.drawable.am001_map_spot, latlng, bundle);
 	    }
 	}
     }
+
 }
