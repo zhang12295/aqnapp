@@ -46,4 +46,4 @@ Temporary Items
 *.dex
 *.ap_
 *.jar
-bin\res\crunch\*
+bin\res\*
