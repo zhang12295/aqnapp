@@ -84,7 +84,7 @@ public class AM003CityChangeActivity extends Activity {
 
 		lvProvinceAm003 = (ListView) this.findViewById(R.id.lvProvinceAm003);
 		lvCityAm003 = (ListView) this.findViewById(R.id.lvCityAm003);
-		searchButton = (ImageButton) this.findViewById(R.id.search_btn);
+		searchButton = (ImageButton) this.findViewById(R.id.citychange_btn_search);
 		searchEditText = (EditText) this.findViewById(R.id.search);
 		lvCityAm003.setDividerHeight(0);
 		initCityData();
