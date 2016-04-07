@@ -21,8 +21,30 @@ public class AppInfo extends Application
     private int countryId;
     private SharedPreferences sp ;
     private Editor editor ;
+    private double longitude;
+    private double latitude;
+    
+    public double getLongitude()
+    {
+        return longitude;
+    }
 
-	public int getJingDianId()
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude()
+    {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public int getJingDianId()
     {
 	return jingDianId;
     }

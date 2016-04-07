@@ -208,6 +208,8 @@ public class MapUtil extends Activity
 	    String city = location.getCity();
 	    String province = location.getProvince();
 	    app.setCity(city.substring(0, city.length() - 1));
+	    app.setLongitude(location.getLongitude());
+	    app.setLatitude(location.getLatitude());
 	    btnLocation.setText(app.getCity());
 
 	    // 设置定位数据
