@@ -4,20 +4,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.njaqn.itravel.aqnapp.am.AM001HomePageActivity;
-import com.njaqn.itravel.aqnapp.util.AQNUtil;
 import com.njaqn.itravel.aqnapp.util.AppConf;
 import com.njaqn.itravel.aqnapp.util.VoiceUtil;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 public class M01WelComeActivity extends Activity
