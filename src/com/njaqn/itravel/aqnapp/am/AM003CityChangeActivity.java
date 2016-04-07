@@ -22,20 +22,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class AM003CityChangeActivity extends Activity {
@@ -47,6 +53,7 @@ public class AM003CityChangeActivity extends Activity {
 	private int initCityid;
 	private int initProvinceId;
 	private ImageButton searchButton;
+	private ImageView ivDelete;
 	private EditText searchEditText;
 	private List<HashMap<String, Object>> provinceData;
 	private LruCache<Integer, List<HashMap<String, Object>>> cityData;
@@ -83,9 +90,35 @@ public class AM003CityChangeActivity extends Activity {
 
 		lvProvinceAm003 = (ListView) this.findViewById(R.id.lvProvinceAm003);
 		lvCityAm003 = (ListView) this.findViewById(R.id.lvCityAm003);
+		ivDelete = (ImageView) findViewById(R.id.search_iv_delete);
+		ivDelete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				searchEditText.setText("");
+				ivDelete.setVisibility(View.GONE);
+				InputMethodManager imm = (InputMethodManager) AM003CityChangeActivity.this
+						.getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+				searchEditText.requestFocusFromTouch();
+			}
+		});
 		searchButton = (ImageButton) this
 				.findViewById(R.id.citychange_btn_search);
 		searchEditText = (EditText) this.findViewById(R.id.search);
+		searchEditText.addTextChangedListener(new EditChangedListener());
+		searchEditText.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					startSearch(searchEditText.getText().toString());
+					
+				}
+				return true;
+			}
+		});
 		lvCityAm003.setDividerHeight(0);
 		initCityData();
 		laodProvinceData();
@@ -213,32 +246,63 @@ public class AM003CityChangeActivity extends Activity {
 		this.finish();
 	}
 
+	public void startSearch(String search) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+		if (!search.equals("")) {
+			SearchService ss = new SearchServiceImpl();
+			HashMap<String, Object> result = ss.searchInCities(search);
+			if (result != null) {
+				int cityId = (Integer) result.get("cityid");
+				int provinceId = (Integer) result.get("provinceid");
+				provinceSetSelection(provinceId, cityId);
+			} else {
+				int provinceId = ss.searchInProvinces(search);
+				if (provinceId != 0) {
+					provinceSetSelection(provinceId, 0);
+				} else {
+					Toast.makeText(getApplicationContext(), "很抱歉，无该城市信息",
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	}
+	
 	private final class SearchClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
-			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 			String search = searchEditText.getText().toString();
-			if (!search.equals("")) {
-				SearchService ss = new SearchServiceImpl();
-				HashMap<String, Object> result = ss.searchInCities(search);
-				if (result != null) {
-					int cityId = (Integer) result.get("cityid");
-					int provinceId = (Integer) result.get("provinceid");
-					provinceSetSelection(provinceId, cityId);
-				} else {
-					int provinceId = ss.searchInProvinces(search);
-					if (provinceId != 0) {
-						provinceSetSelection(provinceId, 0);
-					} else {
-						Toast.makeText(getApplicationContext(), "很抱歉，无该城市信息",
-								Toast.LENGTH_SHORT).show();
-					}
-				}
-			}
+			startSearch(search);
+		}		
+
+	}
+	private class EditChangedListener implements TextWatcher {
+
+		@Override
+		public void afterTextChanged(Editable arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 
+		@Override
+		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			if (!"".equals(s.toString())) {
+				ivDelete.setVisibility(View.VISIBLE);
+			}else {
+				ivDelete.setVisibility(View.GONE);
+			}
+			
+		}
+		
 	}
 
 }
