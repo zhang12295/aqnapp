@@ -17,8 +17,8 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			UrlHttp http = new UrlHttp();
 			String r = http.postRequestForSql(
-					"select top 1 id from B_Province where Name = '"
-							+ search + "'", AQNAppConst.DB_ONE_ONE);
+					"select top 1 id from B_Province where Name = '" + search
+							+ "'", AQNAppConst.DB_ONE_ONE);
 			if (!r.equals("Err"))
 				return Integer.parseInt(r);
 		} catch (Exception e) {
@@ -45,6 +45,58 @@ public class SearchServiceImpl implements SearchService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public List<String> searchInSpotsForComplete(String search) {
+		try {
+			UrlHttp http = new UrlHttp();
+			String r = http.postRequestForSql(
+					"select top 5 name from J_Spot where Name like '%25" + search
+							+ "%25'", AQNAppConst.DB_MANY_MANY);
+			if (r.equals("Err"))
+				return null;
+			JSONArray json = new JSONArray(r);
+			List<String> lst = new ArrayList<String>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject obj = json.getJSONObject(i);
+				String name = obj.getString("name");
+				lst.add(name);
+			}
+			return lst;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<HashMap<String, Object>> searchInSpotsForResults(String search) {
+		try {
+			UrlHttp http = new UrlHttp();
+			String r = http.postRequestForSql(
+					"select id,name,intro,titleImage from J_Spot where Name like '" + search
+					+ "%25'", AQNAppConst.DB_MANY_MANY);
+			if (r.equals("Err"))
+				return null;
+
+			JSONArray json = new JSONArray(r);
+			List<HashMap<String, Object>> lst = new ArrayList<HashMap<String, Object>>();
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject obj = json.getJSONObject(i);
+				HashMap<String, Object> spotData = new HashMap<String, Object>();
+				spotData.put("id", obj.getInt("id"));
+				spotData.put("name", obj.getString("name"));
+				spotData.put("intro", obj.get("intro"));
+				spotData.put("titleImage", obj.get("titleImage"));
+				lst.add(spotData);
+			}
+			return lst;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
