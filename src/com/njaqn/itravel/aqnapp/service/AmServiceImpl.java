@@ -39,6 +39,7 @@ public class AmServiceImpl implements AmService
 	    spot.setId(obj.getInt("ID"));
 	    spot.setLongitude(obj.getString("Longitude"));
 	    spot.setLatitude(obj.getString("latitude"));
+	    spot.setIntro(obj.getString("intro"));
 	    lst.add(spot);
 	}
 
@@ -61,7 +62,9 @@ public class AmServiceImpl implements AmService
 
 	    jd.setName(obj.getString("name"));
 	    jd.setId(obj.getInt("id"));
-
+	    jd.setIntro(obj.getString("intro"));
+	    jd.setLongitude(obj.getDouble("longitude"));
+	    jd.setLatitude(obj.getDouble("latitude"));
 	    lst.add(jd);
 	}
 
@@ -270,7 +273,7 @@ public class AmServiceImpl implements AmService
 	    jd.setId(obj.getInt("id"));
 	    jd.setName(obj.getString("name"));
 	    jd.setSpotId(obj.getInt("spotId"));
-
+	    jd.setIntro("intro");
 	    return jd;
 	}
 	catch (Exception ex)
@@ -310,7 +313,7 @@ public class AmServiceImpl implements AmService
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequestForSql("select ID , Name, Longitude, latitude from J_Spot where countyID in (select ID from B_County where CityID = "+cityId+")",3);
+	    String r = http.postRequestForSql("select ID , Name, Longitude, latitude, intro from J_Spot where countyID in (select ID from B_County where CityID = "+cityId+")",3);
 	    if (r.equals("Err"))
 		return null;
 
@@ -335,6 +338,33 @@ public class AmServiceImpl implements AmService
 		return null;
 
 	    return r;
+	}
+	catch (Exception ex)
+	{
+	    Log.e("Err", ex.getMessage());
+	}
+
+	return null;
+    }
+
+    @Override
+    public JSONObject judgeLocation(double longitude, double latitude)
+    {
+	try
+	{
+	    UrlHttp http = new UrlHttp();
+	    String r = http.postRequestForSql("select top 1 name, ID, dbo.fnGetDistance("+longitude+","+latitude+",longitude,latitude) distance from J_Spot where Longitude is not null order by distance",3);
+	    if (r.equals("Err"))
+	    {
+		return null;
+	    }
+	    else
+	    {
+		JSONArray array = new JSONArray(r);
+		JSONObject object = array.getJSONObject(0);
+		return object;
+	    }
+	    
 	}
 	catch (Exception ex)
 	{
