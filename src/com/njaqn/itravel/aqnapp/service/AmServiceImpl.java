@@ -20,7 +20,7 @@ public class AmServiceImpl implements AmService
 {
 
     /**
-     * ¸ù¾Ýµ±Ç°µÄÎ»ÖÃ»ñµÃÖÜÎ§µÄ¾°Çø
+     * ï¿½ï¿½Ýµï¿½Ç°ï¿½ï¿½Î»ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Î§ï¿½Ä¾ï¿½ï¿½ï¿½
      */
     public List<JSpotBean> fillSpotList(String jsonData) throws Exception
     {
@@ -89,7 +89,7 @@ public class AmServiceImpl implements AmService
     }
 
     /**
-     * »ñµÃËùÓÐÅäÖÃÐÅÏ¢
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     public Map getAppConfig()
     {
@@ -171,8 +171,7 @@ public class AmServiceImpl implements AmService
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequest("maxSpotNum", "" + maxSpotNum,
-		    AQNAppConst.PAGEID_AM_SPOT, AQNAppConst.OP_AM_SPOT_7);
+	    String r = http.postRequestForSql("select top "+maxSpotNum+" id,jc from J_Spot order by Hot desc", AQNAppConst.DB_MANY_MANY);
 	    if (r.equals("Err"))
 		return null;
 
@@ -184,7 +183,7 @@ public class AmServiceImpl implements AmService
 		JSONObject obj = json.getJSONObject(i);
 		HashMap<String, Object> spotData = new HashMap<String, Object>();
 		spotData.put("id", obj.getInt("id"));
-		spotData.put("name", obj.getString("name"));
+		spotData.put("name", obj.getString("jc"));
 		lst.add(spotData);
 	    }
 

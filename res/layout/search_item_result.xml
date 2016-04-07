@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:padding="8dp" 
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/searchSpotImage"
+        android:layout_width="96dp"
+        android:layout_height="96dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/searchSpotImage"
+        android:orientation="vertical"
+        android:paddingLeft="8dp" >
+
+        <TextView
+            android:id="@+id/searchResultName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="南京工程学院"
+            android:textColor="@drawable/am003_select_item_font"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/searchResultIntro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="introduction"
+            android:textColor="#99000000"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</RelativeLayout>
