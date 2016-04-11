@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
- 
+
 public class BM001RegisterActivity extends Activity {
 	private Intent it;
 	private EditText txtRegisterUser;

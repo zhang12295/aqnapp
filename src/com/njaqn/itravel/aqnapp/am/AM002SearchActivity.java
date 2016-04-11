@@ -9,18 +9,17 @@ import com.njaqn.itravel.aqnapp.R;
 import com.njaqn.itravel.aqnapp.listener.SearchViewListener;
 import com.njaqn.itravel.aqnapp.service.AmService;
 import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
-import com.njaqn.itravel.aqnapp.service.BaseService;
-import com.njaqn.itravel.aqnapp.service.BaseServiceImpl;
 import com.njaqn.itravel.aqnapp.service.SearchService;
 import com.njaqn.itravel.aqnapp.service.SearchServiceImpl;
 import com.njaqn.itravel.aqnapp.service.adapter.SearchAutoCompleteAdapter;
 import com.njaqn.itravel.aqnapp.service.adapter.SearchHistoryAdapter;
 import com.njaqn.itravel.aqnapp.service.adapter.SearchResultAdatper;
+import com.njaqn.itravel.aqnapp.util.SharedPreferencesUtil;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,18 +31,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TabHost;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -51,6 +46,7 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 		SearchViewListener {
 
 	private AppInfo app;
+	private Handler handler;
 
 	private ListView lvResults;
 	private ListView lvTips;
@@ -68,38 +64,81 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 	private SearchHistoryAdapter historyAdapter;
 	private SearchResultAdatper resultAdapter;
 
-	// private SearchViewListener mListener;
-
 	private String lastSearch = "";
 	private List<HashMap<String, Object>> resultData;
 	private List<HashMap<String, Object>> hotData;
 	private List<HashMap<String, Object>> nearbyData;
 	private List<String> historyData;
+	private List<String> keys;
+	private int historyDataCount = 0;
 	private List<String> autoCompleteData;
+	private SharedPreferencesUtil sp;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.am002_search);
-		initData();
+		handler = new Handler();
 		initViews();
+		initData();
 
 	}
 
 	private void initData() {
-		getHistoryData();
-		getAutoCompleteData(null);
-		getResultData(null);
-		getHotData();
-		getNearbyData();
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				getHistoryData();
+				getHotData();
+				getNearbyData();
+				for (int i = 0; i < hotData.size(); i++) {
+					TextView textView = (TextView) findViewById(R.id.hot_spot1
+							+ i);
+					textView.setText(hotData.get(i).get("name").toString());
+					textView.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							int position = v.getId() - R.id.hot_spot1;
+							int id = (Integer) hotData.get(position).get("id");
+							String nameString = hotData.get(position)
+									.get("name").toString();
+							Toast.makeText(AM002SearchActivity.this,
+									nameString + "  ID:" + id,
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+				for (int i = 0; i < nearbyData.size(); i++) {
+					TextView textView = (TextView) findViewById(R.id.nearby_spot1
+							+ i);
+					textView.setText(nearbyData.get(i).get("name").toString());
+					textView.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							int position = v.getId() - R.id.nearby_spot1;
+							int id = (Integer) nearbyData.get(position).get(
+									"id");
+							String nameString = nearbyData.get(position)
+									.get("name").toString();
+							Toast.makeText(AM002SearchActivity.this,
+									nameString + "  ID:" + id,
+									Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+			}
+		});
 
 	}
 
 	private void getNearbyData() {
 		app = (AppInfo) getApplication();
-//		double longitude = app.get;
-//		double latitude = app.get;
-		AmService as = new AmServiceImpl();
-//		nearbyData = as.getAroundSpotByCurrLocation(longitude, latitude, 9);
+		double longitude = app.getLongitude();
+		double latitude = app.getLatitude();
+		SearchService ss = new SearchServiceImpl();
+		nearbyData = ss.getNearbySpot(longitude, latitude, 9);
 	}
 
 	private void getHotData() {
@@ -119,7 +158,7 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 				lastSearch = search;
 				lvResults.setAdapter(null);
 				resultAdapter = new SearchResultAdatper(this, resultData,
-						lvResults);// 使用notifyDataSetChanged()无法更新
+						lvResults);
 				lvResults.setAdapter(resultAdapter);
 			}
 		}
@@ -152,9 +191,18 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 	}
 
 	private void getHistoryData() {
-		historyData = new ArrayList<String>();
-		for (int i = 1; i <= 5; i++) {
-			historyData.add("历史搜索" + i);
+		sp = new SharedPreferencesUtil(this, "historySearchData",
+				Activity.MODE_PRIVATE);
+		historyDataCount = sp.getDataCount();
+		keys = new ArrayList<String>();
+		for (int i = 0; i < historyDataCount; i++) {
+			keys.add("historySearchData" + i);
+		}
+		historyData = sp.getData(keys);
+		for (int i = historyData.size() - 1; i > -1; i--) {
+			if (historyData.get(i).equals("")) {
+				historyData.remove(i);
+			}
 		}
 		historyAdapter = new SearchHistoryAdapter(this, historyData);
 	}
@@ -163,24 +211,21 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 		mLayoutParams = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		initView = findViewById(R.id.init_view);
-		for (int i = 0; i < hotData.size(); i++) {
-			TextView textView = (TextView) findViewById(R.id.hot_spot1 + i);
-			textView.setText(hotData.get(i).get("name").toString());
-			textView.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					int position = v.getId() - R.id.hot_spot1;
-					int id = (Integer) hotData.get(position).get("id");
-					String nameString = hotData.get(position).get("name").toString();
-					Toast.makeText(AM002SearchActivity.this, nameString+"  ID:"+id, Toast.LENGTH_SHORT).show();
-				}
-			});
-		}
+
 		historyView = LayoutInflater.from(this).inflate(
 				R.layout.search_history_view, null);
 		btnClear = (Button) historyView
 				.findViewById(R.id.search_btn_recent_clear);
+		btnClear.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				historyDataCount = 0;
+				historyData.clear();
+				keys.clear();
+				historyAdapter.notifyDataSetChanged();
+			}
+		});
 		childView = initView;
 		changedLayout = (LinearLayout) findViewById(R.id.change_layout);
 		etInput = (EditText) findViewById(R.id.search_et_input);
@@ -314,38 +359,25 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 			break;
 		case R.id.search_iv_delete:
 			etInput.setText("");
+			if (childView != historyView) {
+				changedLayout.removeView(childView);
+				changedLayout.addView(historyView, mLayoutParams);
+				childView = historyView;
+				Log.i("childView", "historyView" + childView.hashCode());
+
+				lvTips.setAdapter(historyAdapter);
+				btnClear.setVisibility(View.VISIBLE);
+
+			}
+
 			ivDelete.setVisibility(View.GONE);
+			InputMethodManager imm = (InputMethodManager) this
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 			break;
 		case R.id.search_btn_search:
 			notifyStartSearching(etInput.getText().toString());
 			break;
-		case R.id.hot_spot1:
-
-			break;
-		case R.id.hot_spot2:
-
-			break;
-		case R.id.hot_spot3:
-
-			break;
-		case R.id.hot_spot4:
-
-			break;
-		case R.id.hot_spot5:
-
-			break;
-		case R.id.hot_spot6:
-
-			break;
-		case R.id.hot_spot7:
-
-			break;
-		case R.id.hot_spot8:
-
-			break;
-		case R.id.hot_spot9:
-			
-			break;	
 		}
 	}
 
@@ -372,8 +404,36 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 			// 更新搜索数据
 			resultAdapter.notifyDataSetChanged();
 		}
-		Toast.makeText(this, "完成搜索", Toast.LENGTH_SHORT).show();
+		if (resultData.size() > 0) {
+			Toast.makeText(this, "完成搜索", Toast.LENGTH_SHORT).show();
+		}else {
+			Toast.makeText(this, "没有找到相关景区", Toast.LENGTH_SHORT).show();
+		}
+		
 
+		handler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				for (int i = 0; i < historyDataCount; i++) {
+					if (lastSearch.equals(historyData.get(i))) {
+						historyData.remove(i);
+						historyDataCount--;
+						keys.remove(historyDataCount);
+					}
+				}
+				historyData.add(0, lastSearch);
+				keys.add("historySearchData" + historyDataCount);
+				historyDataCount++;
+				historyAdapter.notifyDataSetChanged();
+				sp.saveData(keys, historyData);
+			}
+		});
+
+	}
+
+	public void returnOnClick(View v) {
+		this.finish();
 	}
 
 }

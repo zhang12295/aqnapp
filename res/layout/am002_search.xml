@@ -8,22 +8,22 @@
     <RelativeLayout
         android:id="@+id/topMenu"
         android:layout_width="fill_parent"
-        android:layout_height="45dip"
-        android:background="#24b69f" >
+        android:layout_height="45dp"
+        android:background="@drawable/title_color" >
 
-        <ImageView
-            android:id="@+id/jiantou_l1"
-            android:layout_width="15dip"
-            android:layout_height="20dip"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dip"
-            android:layout_marginTop="10dip"
+        <ImageButton
+            android:id="@+id/imageButtonBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/title_color"
+            android:onClick="returnOnClick"
             android:src="@drawable/m01_jian_tou_left" />
 
         <TextView
             android:id="@+id/search_spot"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="景区搜索"
             android:textColor="#ffffff"
@@ -33,7 +33,7 @@
     <LinearLayout
         android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_below="@id/topMenu"
         android:orientation="horizontal" >
 
@@ -42,7 +42,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1"  >
 
             <EditText
                 android:id="@+id/search_et_input"
@@ -52,7 +52,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/am002_search_sharp"
                 android:drawableLeft="@drawable/am001_search"
                 android:gravity="center_vertical"
@@ -86,8 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/search"
-        android:orientation="vertical"
-        android:background="#ffffff" >
+        android:background="#ffffff"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/init_view"
