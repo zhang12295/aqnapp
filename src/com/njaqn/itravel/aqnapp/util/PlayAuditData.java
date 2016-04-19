@@ -20,7 +20,11 @@ public class PlayAuditData {
 	
 	public PlayAuditData()
 	{
-		playWordMap =  new TreeMap<String,PlayWordBean>(); //ÓïÒôºÏ³ÉÁÐ±í
+		playWordMap =  new TreeMap<String,PlayWordBean>(); //ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½Ð±ï¿½
+	}
+	
+	public PlayAuditData(Map<String,PlayWordBean> playWordMap){
+		this.playWordMap = playWordMap;
 	}
 
 	public String getLocationAddress() {
@@ -33,12 +37,12 @@ public class PlayAuditData {
 		this.locationLatLng = locationLatLng;
 		this.locationAddress = locationAddress;
         this.city = city;
-		//locationAddressÊÇ key
+		//locationAddressï¿½ï¿½ key
 		if(playWordMap.containsKey(locationAddress)) return;
 		
-		String word = "ÄúÏÖÔÚËùÔÚµÄÎ»ÖÃÊÇ£º"+locationAddress.replace(province, "").replace(city, "");
+		String word = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Î»ï¿½ï¿½ï¿½Ç£ï¿½"+locationAddress.replace(province, "").replace(city, "");
 		
-		//²¥·Åµ±Ç°Î»ÖÃ
+		//ï¿½ï¿½ï¿½Åµï¿½Ç°Î»ï¿½ï¿½
 		PlayWordBean pwb = new PlayWordBean();
 		pwb.setWord(word);
 		pwb.setPlayCount(2);
@@ -46,7 +50,7 @@ public class PlayAuditData {
 		
 		playWordMap.put(pwb.getKey(),pwb);
 		
-		//²¥·ÅÖÜÎ§¾°Çø
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§ï¿½ï¿½ï¿½ï¿½
 		AmService am = new AmServiceImpl();
 		List<JSpotBean> lst = am.getAroundSpotByCurrLocation(locationLatLng.longitude, locationLatLng.latitude, 5);
 		if(lst == null) return;

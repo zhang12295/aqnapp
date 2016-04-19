@@ -18,6 +18,7 @@ import com.njaqn.itravel.aqnapp.util.SharedPreferencesUtil;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -250,8 +251,17 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long l) {
-				Toast.makeText(AM002SearchActivity.this, position + "",
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(AM002SearchActivity.this, position + "",
+//						Toast.LENGTH_SHORT).show();
+				HashMap<String, Object> data = (HashMap<String, Object>) lvResults
+						.getItemAtPosition(position);
+				String text = data.get("id").toString();
+				String spotName = data.get("name").toString();
+				
+				Intent i = new Intent(AM002SearchActivity.this,AM006SpotActivity.class);
+				i.putExtra("id", text);
+				i.putExtra("name", spotName);
+				startActivity(i);
 
 			}
 		});

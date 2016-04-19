@@ -84,7 +84,7 @@ public class AM003CityAdapter extends BaseAdapter implements OnScrollListener {
 		}else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.imgCityImage.setImageResource(R.drawable.ic_launcher);
+		viewHolder.imgCityImage.setImageResource(R.drawable.am006_spot_goto);
 		String url = lstData.get(position).get("cityImage").toString();
 		if (!url.equals("")) {
 			url = AQNAppConst.URL_IMG + url;
@@ -150,7 +150,7 @@ public class AM003CityAdapter extends BaseAdapter implements OnScrollListener {
 			if(bitmap != null){
 				mImageView.setImageBitmap(bitmap);
 			}else{
-				mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+				mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.am006_spot_goto));
 			}
 		}
 	}
