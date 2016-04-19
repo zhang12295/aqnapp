@@ -43,3 +43,6 @@ Temporary Items
 .apdisk
 *.apk
 *.ap_
+*.class
+*.dex
+*.class

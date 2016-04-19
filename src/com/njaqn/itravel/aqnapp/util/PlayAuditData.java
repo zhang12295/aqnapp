@@ -1,6 +1,5 @@
 package com.njaqn.itravel.aqnapp.util;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,63 +10,69 @@ import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
 import com.njaqn.itravel.aqnapp.service.bean.JSpotBean;
 import com.njaqn.itravel.aqnapp.service.bean.PlayWordBean;
 
-public class PlayAuditData {
-	private Map<String,PlayWordBean> playWordMap = null;
-	private String locationAddress = null;
-	private LatLng locationLatLng = null;
-	private String city;
-	private String province;
-	
-	public PlayAuditData()
+public class PlayAuditData
+{
+    private Map<String, PlayWordBean> playWordMap = null;
+    private String locationAddress = null;
+    private LatLng locationLatLng = null;
+    private String city;
+    private String province;
+
+    public PlayAuditData()
+    {
+	playWordMap = new TreeMap<String, PlayWordBean>(); // ï¿½ï¿½ï¿½ï¿½ï¿½Ï³ï¿½ï¿½Ð±ï¿½
+    }
+
+    public String getLocationAddress()
+    {
+	return locationAddress;
+    }
+
+    public void setLocationInfo(String province, String city,
+	    String locationAddress, LatLng locationLatLng)
+    {
+	this.province = province;
+	this.locationLatLng = locationLatLng;
+	this.locationAddress = locationAddress;
+	this.city = city;
+	if (playWordMap.containsKey(locationAddress))
+	    return;
+
+	String word = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Î»ï¿½ï¿½ï¿½Ç£ï¿½"
+		+ locationAddress.replace(province, "").replace(city, "");
+
+	PlayWordBean pwb = new PlayWordBean();
+	pwb.setWord(word);
+	pwb.setPlayCount(2);
+	pwb.setKey("s1");
+
+	playWordMap.put(pwb.getKey(), pwb);
+
+	AmService am = new AmServiceImpl();
+	List<JSpotBean> lst = am.getAroundSpotByCurrLocation(
+		locationLatLng.longitude, locationLatLng.latitude, 5);
+	if (lst == null)
+	    return;
+
+	for (JSpotBean o : lst)
 	{
-		playWordMap =  new TreeMap<String,PlayWordBean>(); //ÓïÒôºÏ³ÉÁÐ±í
-	}
+	    pwb = new PlayWordBean();
 
-	public String getLocationAddress() {
-		return locationAddress;
-	}
+	    pwb.setWord(o.getIntro());
+	    pwb.setPlayCount(1);
+	    pwb.setKey(o.getName());
 
-	public void setLocationInfo(String province,String city, String locationAddress,LatLng locationLatLng) 
-	{	
-		this.province = province;
-		this.locationLatLng = locationLatLng;
-		this.locationAddress = locationAddress;
-        this.city = city;
-		//locationAddressÊÇ key
-		if(playWordMap.containsKey(locationAddress)) return;
-		
-		String word = "ÄúÏÖÔÚËùÔÚµÄÎ»ÖÃÊÇ£º"+locationAddress.replace(province, "").replace(city, "");
-		
-		//²¥·Åµ±Ç°Î»ÖÃ
-		PlayWordBean pwb = new PlayWordBean();
-		pwb.setWord(word);
-		pwb.setPlayCount(2);
-		pwb.setKey("s1");
-		
-		playWordMap.put(pwb.getKey(),pwb);
-		
-		//²¥·ÅÖÜÎ§¾°Çø
-		AmService am = new AmServiceImpl();
-		List<JSpotBean> lst = am.getAroundSpotByCurrLocation(locationLatLng.longitude, locationLatLng.latitude, 5);
-		if(lst == null) return;
-		
-		for(JSpotBean o : lst)
-		{
-			pwb = new PlayWordBean();
-			
-			pwb.setWord(o.getIntro());
-			pwb.setPlayCount(1);
-			pwb.setKey(o.getName());
-		
-			playWordMap.put("s2"+o.getName(),pwb);
-		}
+	    playWordMap.put("s2" + o.getName(), pwb);
 	}
+    }
 
-	public LatLng getLocationLatLng() {
-		return locationLatLng;
-	}
+    public LatLng getLocationLatLng()
+    {
+	return locationLatLng;
+    }
 
-	public Map<String,PlayWordBean> getPlayWordMap() {
-		return playWordMap;
-	}
+    public Map<String, PlayWordBean> getPlayWordMap()
+    {
+	return playWordMap;
+    }
 }

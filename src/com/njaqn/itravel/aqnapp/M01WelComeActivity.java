@@ -40,9 +40,9 @@ public class M01WelComeActivity extends Activity
     {
 	VoiceUtil vutil = new VoiceUtil(this.getApplicationContext());
 
-	String welcomeWord = conf.getAppConfig(conf.WELCOME);
+	String welcomeWord = conf.getAppConfig(AppConf.WELCOME);
 	if (welcomeWord != null)
-	    welcomeWord = "»¶Ó­Ê¹ÓÃ°®È¥ÄÄµ¼ÓÎ½âËµÉñÆ÷";
+	    welcomeWord = "æ¬¢è¿Žä½¿ç”¨çˆ±åŽ»å“ªæ—…æ¸¸è§£è¯´ç¥žå™¨";
 
 	vutil.playAudio(welcomeWord);
     }
@@ -66,15 +66,15 @@ public class M01WelComeActivity extends Activity
 //	    waitTimes = "1";
 	String waitTimes = "1";
 
-	int times = new Integer(waitTimes).intValue();
+	int times = Integer.parseInt(waitTimes);
 	timer.schedule(task, times * 1000);
     }
 
     public void setWelcomeBackGroundColor()
     {
-	String bgcolor = conf.getAppConfig(conf.WELCOME_BG_COLOR);
+	String bgcolor = conf.getAppConfig(AppConf.WELCOME_BG_COLOR);
 	if (bgcolor == null)
-	{// È¡±³¾°Í¼Æ¬µÄÑÕÉ«
+	{
 	    BitmapDrawable db = (BitmapDrawable) imgWelcome.getDrawable();
 	    Bitmap bitmap = db.getBitmap();
 	    int color = bitmap.getPixel(20, 20);
