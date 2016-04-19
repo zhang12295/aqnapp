@@ -81,7 +81,7 @@ public class SearchResultAdatper extends BaseAdapter implements OnScrollListener
 		}else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		viewHolder.imgCityImage.setImageResource(R.drawable.ic_launcher);
+		viewHolder.imgCityImage.setImageResource(R.drawable.am006_spot_goto);
 		String url = lstData.get(position).get("titleImage").toString();
 		if (!url.equals("")) {
 			url = AQNAppConst.URL_IMG + url;
@@ -136,7 +136,7 @@ public class SearchResultAdatper extends BaseAdapter implements OnScrollListener
 			if(bitmap != null){
 				mImageView.setImageBitmap(bitmap);
 			}else{
-				mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_launcher));
+				mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.am006_spot_goto));
 			}
 		}
 	}
