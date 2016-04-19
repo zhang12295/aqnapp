@@ -47,3 +47,4 @@ Temporary Items
 *.ap_
 *.jar
 bin\res\*
+*.dex
