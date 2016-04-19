@@ -181,9 +181,8 @@ public class AM003CityChangeActivity extends Activity {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			ListView lv_city = (ListView) parent;
-			Log.i("lv_city", lv_city.hashCode() + "");
-			HashMap<String, Object> data = (HashMap<String, Object>) lv_city
+			ListView lv_province = (ListView) parent;
+			HashMap<String, Object> data = (HashMap<String, Object>) lv_province
 					.getItemAtPosition(position);
 			showCity(Integer.parseInt(data.get("id").toString()), 0);
 		}

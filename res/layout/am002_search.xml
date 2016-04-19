@@ -54,7 +54,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/am002_search_sharp"
-                android:drawableLeft="@drawable/am001_search"
+                android:drawableLeft="@drawable/am001_search2"
+                
                 android:gravity="center_vertical"
                 android:hint="请输入关键字"
                 android:imeOptions="actionSearch"

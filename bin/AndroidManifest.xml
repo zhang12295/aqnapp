@@ -29,11 +29,12 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
+        android:name=".AppInfo"
         android:allowBackup="true"
         android:icon="@drawable/app_icon1"
         android:label="@string/app_name"
-        android:name="com.njaqn.itravel.aqnapp.AppInfo"
-        android:theme="@style/AppTheme">"
+        android:theme="@style/AppTheme" >
+"
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="NxAnQaOqyV7L7HSBV40lr7PE" />
@@ -49,26 +50,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.njaqn.itravel.aqnapp.am.AM003CityChangeActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.njaqn.itravel.aqnapp.am.AM004DownloadActivity"  />
-        <activity  android:name="com.njaqn.itravel.aqnapp.am.AM005GongLueActivity"   />
-        <activity android:name=".am.AM002SearchActivity" android:theme="@style/AppTheme"/>
-        <activity android:name=".am.AM001HomePageActivity" android:label="@string/title_activity_shouye"
+        <activity
+            android:name=".am.AM003CityChangeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".am.AM004DownloadActivity" />
+        <activity android:name=".am.AM005GongLueActivity" />
+        <activity
+            android:name=".am.AM002SearchActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".am.AM001HomePageActivity"
+            android:label="@string/title_activity_shouye"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.njaqn.itravel.aqnapp.bm.BM006HomePageActivity"/>
-        <activity android:name="com.njaqn.itravel.aqnapp.bm.BM005LoginActivity"/>
-        <activity android:name="com.njaqn.itravel.aqnapp.bm.BM003ResetPasswdActivity"/>
-        <activity
-            android:name=".bm.BM004ResetPasswdTwoActivity">
+        <activity android:name=".bm.BM006HomePageActivity" />
+        <activity android:name=".bm.BM005LoginActivity" />
+        <activity android:name=".bm.BM003ResetPasswdActivity" />
+        <activity android:name=".bm.BM004ResetPasswdTwoActivity" >
+        </activity>
+        <activity android:name=".bm.BM001RegisterActivity" >
+        </activity>
+        <activity android:name=".bm.BM002RegisterTwoActivity" >
+        </activity>
+        <activity android:name=".am.AM006SpotActivity" >
         </activity>
         <activity
-            android:name=".bm.BM001RegisterActivity">
-        </activity>
-        <activity
-            android:name="com.njaqn.itravel.aqnapp.bm.BM002RegisterTwoActivity">
+            android:name=".AM006SpotIntroActivity"
+            android:label="@string/title_activity_am006_spot_intro"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
     </application>
-    
-   
+
 </manifest>
