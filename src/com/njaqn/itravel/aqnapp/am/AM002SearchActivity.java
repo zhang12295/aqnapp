@@ -107,6 +107,13 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 							Toast.makeText(AM002SearchActivity.this,
 									nameString + "  ID:" + id,
 									Toast.LENGTH_SHORT).show();
+							String text = id+"";
+														
+							Intent i = new Intent(AM002SearchActivity.this,AM006SpotActivity.class);
+							i.putExtra("id", text);
+							i.putExtra("name", nameString);
+							startActivity(i);
+							
 						}
 					});
 				}
@@ -126,6 +133,12 @@ public class AM002SearchActivity extends Activity implements OnClickListener,
 							Toast.makeText(AM002SearchActivity.this,
 									nameString + "  ID:" + id,
 									Toast.LENGTH_SHORT).show();
+							String text = id+"";
+							
+							Intent i = new Intent(AM002SearchActivity.this,AM006SpotActivity.class);
+							i.putExtra("id", text);
+							i.putExtra("name", nameString);
+							startActivity(i);
 						}
 					});
 				}

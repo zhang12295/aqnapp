@@ -75,9 +75,9 @@
         <activity android:name=".am.AM006SpotActivity" >
         </activity>
         <activity
-            android:name=".AM006SpotIntroActivity"
+            android:name="com.njaqn.itravel.aqnapp.am.AM006SpotIntroActivity"
             android:label="@string/title_activity_am006_spot_intro"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
     </application>
 
