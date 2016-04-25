@@ -3,33 +3,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.njaqn.itravel.aqnapp.AM006SpotIntroActivity" >
+    tools:context="com.njaqn.itravel.aqnapp.am.AM006SpotIntroActivity" >
+
+    <RelativeLayout
+        android:id="@+id/topMenu"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="#00ffffff" >
+
+        <ImageButton
+            android:id="@+id/imageButtonBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:background="#00ffffff"
+            android:onClick="returnOnClick"
+            android:src="@drawable/m01_jian_tou_left" />
+
+        <TextView
+            android:id="@+id/spot_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="图片"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
-                android:id="@+id/iv_spotimage"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="7"
-                android:layout_marginTop="12dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:scaleType="fitXY" >
+        android:id="@+id/iv_spotimage"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="7"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scaleType="fitXY" >
+    </android.support.v4.view.ViewPager>
 
-            </android.support.v4.view.ViewPager>
-    <ScrollView 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" >
+
+        <TextView
+            android:id="@+id/tv_positionspot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:text="1"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_totalspot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_positionspot"
+            android:text="/10"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none" >
+
         <TextView
-        android:id="@+id/tv_spot_int"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:text="@string/hello_world" />
+            android:id="@+id/tv_spot_int"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_positionspot"
+            android:padding="12dp"
+            android:text="@string/hello_world"
+            android:textSize="16sp" />
     </ScrollView>
-    
 
 </LinearLayout>
