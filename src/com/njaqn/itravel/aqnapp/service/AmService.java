@@ -43,5 +43,7 @@ public interface AmService
 
     public String getSpotIntroById(int id);
 
-    public JSONObject judgeLocation(double d, double e);
+    public List<JSONObject> judgeLocation(double d, double e);
+
+    public List<JSONObject> getSpotAroundPointsBysoptId(int spotId);
 }
