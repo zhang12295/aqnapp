@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,35 +34,33 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.TextOptions;
+import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.njaqn.itravel.aqnapp.service.AmService;
 import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
-import com.njaqn.itravel.aqnapp.service.bean.AQNPointer;
 import com.njaqn.itravel.aqnapp.service.bean.JSpotBean;
 import com.njaqn.itravel.aqnapp.service.bean.JingDianBean;
 import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
 
-public class MapUtil extends Activity
+public class MapUtil 
 {
     private Context ctx;
     private LocationClient cli;
     private BaiduMap map;
     private boolean isFristLoc = true;
-    private String locationAddress = null;
     private LatLng locationLatLng = null;
-    private PlayAuditData data;
     private AppInfo app;
     private Button btnLocation;
     private VoiceUtil vUtil;
-
+    //è¡¨ç¤ºæ˜¾ç¤ºé‚£ç§é¢œè‰²
+    private int i =0;
     private ButtonClickListener btnClick;
     private AmService aService = new AmServiceImpl();
     
-    public MapUtil(Context ctx, PlayAuditData data, AppInfo app, VoiceUtil vUtil)
+    public MapUtil(Context ctx,  AppInfo app, VoiceUtil vUtil)
     {
-	this.data = data;
 	this.ctx = ctx;
 	this.app = app;
 	this.vUtil = vUtil;
@@ -74,21 +71,30 @@ public class MapUtil extends Activity
     {
 	this.btnLocation = btnLocation;
     }
-
+    /**
+     * åŠŸèƒ½ï¼šåœ¨åœ°å›¾ä¸Šæ·»åŠ ä¸€ä¸ªè¦†ç›–ç‰©
+     * @param iconResource æ˜¾ç¤ºçš„å›¾æ ‡èµ„æº
+     * @param point ç»çº¬åº¦
+     * @param info é¢å¤–ä¿¡æ¯
+     */
     public void setMapMarker(int iconResource, LatLng point, Bundle info)
     {
 	BitmapDescriptor bitmap = BitmapDescriptorFactory
 		.fromResource(iconResource);
 	OverlayOptions option = new MarkerOptions().position(point)
-		.icon(bitmap).zIndex(0).period(25).extraInfo(info);
+		.icon(bitmap).zIndex(10).period(25).extraInfo(info);
 	map.addOverlay(option);
     }
 
+    /**
+     * åœ¨åœ°å›¾ä¸Šæ·»åŠ æ ‡è¯†ä¿¡æ¯
+     * @param point ç»çº¬åº¦
+     * @param info æ˜¾ç¤ºåœ¨åœ°å›¾ä¸Šçš„ä¿¡æ¯
+     */
     public void setPopMarker(LatLng point, Bundle info)
     {
-	// ´´½¨InfoWindowÕ¹Ê¾µÄview
-	LayoutInflater inflater = (LayoutInflater) ctx
-		.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	// åˆå§‹åŒ–View
+	LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	View v = inflater.inflate(R.layout.am001_map_popview, null);
 
 	ImageButton button = (ImageButton) v.findViewById(R.id.btnPlayAudio);
@@ -105,11 +111,12 @@ public class MapUtil extends Activity
 	txtName.setText(info.getString("name"));
 	textView.setText(info.getString("intro"));
 
-	// ´´½¨InfoWindow , ´«Èë view£¬ µØÀí×ø±ê£¬ y ÖáÆ«ÒÆÁ¿
+	// æ·»åŠ ä¿¡æ¯çª—å£
 	InfoWindow mInfoWindow = new InfoWindow(v, point, -27);
 	map.showInfoWindow(mInfoWindow);
     }
     
+    //ä¸ºç›¸åº”çš„buttonæ·»åŠ ç›‘å¬äº‹ä»¶
     private final class ButtonClickListener implements OnClickListener
     {
 
@@ -154,45 +161,21 @@ public class MapUtil extends Activity
 
 	}
     }
-	
 
-    // Ìí¼Ó¸²¸ÇÎïµÄµã
-    public void setCurrLocationMarker()
-    {
-	BitmapDescriptor bd1 = BitmapDescriptorFactory
-		.fromResource(R.drawable.m01_point_red);
-	// BitmapDescriptor bd2 = BitmapDescriptorFactory
-	// .fromResource(R.drawable.m01_point_white);
-	// ArrayList<BitmapDescriptor> giflist = new
-	// ArrayList<BitmapDescriptor>();
-	// giflist.add(bd1);
-	// giflist.add(bd2);
-	OverlayOptions ol = new MarkerOptions().position(locationLatLng)
-		.icon(bd1).zIndex(0).period(25);
-	map.addOverlay(ol);
-    }
-
-    public void setMarkerText(LatLng pointer, String text)
-    {
-	// ¹¹½¨ÎÄ×ÖOption¶ÔÏó£¬ÓÃÓÚÔÚµØÍ¼ÉÏÌí¼ÓÎÄ×Ö
-	OverlayOptions textOption = new TextOptions().bgColor(0xAAFFFF00)
-		.fontSize(24).fontColor(0xFFFF00FF).text(text)
-		.position(pointer);
-	map.addOverlay(textOption);
-    }
-
+    //å¼€å¯å®šä½
     public boolean setCurrLocation(MapView view)
     {
 	map = view.getMap();
-	map.setMyLocationEnabled(true); // ¿ªÆô¶¨Î»Í¼²ã
-	cli = new LocationClient(ctx);// ÊµÀı»¯LocationClientÀà
+	map.setMyLocationEnabled(true);
+	cli = new LocationClient(ctx);
 	cli.registerLocationListener(new MyLocationListener());
 	this.setLocationOption();
-	map.setMapType(BaiduMap.MAP_TYPE_NORMAL); // ÉèÖÃµØÍ¼ÀàĞÍ
+	map.setMapType(BaiduMap.MAP_TYPE_NORMAL);
 	cli.start();
 	return true;
     }
 
+    //ä½ç½®ä¿¡æ¯ç›‘å¬å›æ‰æ¥å£
     public class MyLocationListener implements BDLocationListener
     {
 	@Override
@@ -200,7 +183,7 @@ public class MapUtil extends Activity
 	{
 	    if (location == null)
 		return;
-
+	    //æ”¶é›†å½“å‰ä½ç½®ä¿¡æ¯
 	    MyLocationData locData = new MyLocationData.Builder()
 		    .accuracy(location.getRadius()).direction(100)
 		    .latitude(location.getLatitude())
@@ -212,42 +195,29 @@ public class MapUtil extends Activity
 	    app.setLatitude(location.getLatitude());
 	    btnLocation.setText(app.getCity());
 
-	    // ÉèÖÃ¶¨Î»Êı¾İ
+	    // è®¾ç½®å®šä½æ•°æ®
 	    map.setMyLocationData(locData);
-	    // ¿ªÆôÄ¬ÈÏµÄ¶¨Î»Í¼±êÏÔÊ¾
-	    map.setMyLocationEnabled(true);
 
-	    if (location.getLocType() == BDLocation.TypeNetWorkLocation)
-		locationAddress = location.getAddrStr();
-	    // ÅĞ¶ÏÓÃ»§ÊÇ·ñÔÚ¾°µãÖĞ
 	    if (isFristLoc)
 	    {
 		isFristLoc = false;
 		locationLatLng = new LatLng(location.getLatitude(),
 			location.getLongitude());
-		data.setLocationInfo(province, city, locationAddress,
-			locationLatLng);
-		// setCurrLocationMarker(); // ÉèÖÃÉÁË¸µÄÍ¼±ê
-		// setPopMarker(locationLatLng, locationAddress);
-		// LatLng l1 = new
-		// LatLng(location.getLatitude()+0.01,location.getLongitude()+0.01);
-		// setMapMarker(R.drawable.ic_launcher,l1);
+		//è®¾ç½®åœ°å›¾ä¸­å¿ƒç‚¹åŠç¼©æ”¾çº§åˆ«
 		MapStatusUpdate su = MapStatusUpdateFactory.newLatLngZoom(
 			locationLatLng, 16);
-		// ÉèÖÃµØÍ¼ÖĞĞÄµã¼°Ëõ·Å¼¶±ğ
 		map.animateMapStatus(su);
 
-		// ÉèÖÃµØÍ¼±êÖ¾µã»÷¼àÌıÊÂ¼ş
+		//è®¾ç½®åœ°å›¾è¦†ç›–ç‚¹ç‚¹å‡»ç›‘å¬äº‹ä»¶
 		map.setOnMarkerClickListener(new MarkerListener());
-
-		//
+		//è®¾ç½®åœ°å›¾ç‚¹å‡»ç›‘å¬äº‹ä»¶
 		map.setOnMapClickListener(new MapClickListener());
-		// ¸ù¾İÓÃ»§ËùÔÚÎ»ÖÃ¶¯Ì¬Ñ¡È¡¾°Çø»òÕß¾°µã
+		//åˆ¤æ–­ç”¨æˆ·æ˜¯å¦åœ¨æ™¯åŒº
 		setMark(location);
 	    }
 	}
     }
-
+    //åœ°å›¾ç‚¹å‡»äº‹ä»¶å›æ‰æ¥å£
     private final class MapClickListener implements OnMapClickListener
     {
 
@@ -255,7 +225,6 @@ public class MapUtil extends Activity
 	public void onMapClick(LatLng arg0)
 	{
 	    map.hideInfoWindow();
-
 	}
 
 	@Override
@@ -266,7 +235,7 @@ public class MapUtil extends Activity
 	}
 
     }
-
+    //è¦†ç›–ç‚¹ç‚¹å‡»å›æ‰æ¥å£
     private final class MarkerListener implements OnMarkerClickListener
     {
 
@@ -289,13 +258,12 @@ public class MapUtil extends Activity
 
     }
 
-    // ÉèÖÃ¶¨Î»²ÎÊı
+    // è®¾ç½®å®šä½å‚æ•°
     private void setLocationOption()
     {
 	LocationClientOption option = new LocationClientOption();
 	option.setOpenGps(true);
 
-	// ÉèÖÃ¶¨Î»Ä£Ê½
 	option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
 	option.setCoorType("bd09ll");
 	option.setAddrType("all");
@@ -305,64 +273,75 @@ public class MapUtil extends Activity
 	cli.setLocOption(option);
     }
 
-    public void judgeUserLocation(BDLocation location)
-    {
-	AmService as = new AmServiceImpl();
-	// as.judgeSpot
-
-    }
-
-    public static AQNPointer getCurrGPSPointer()
-    {
-	return null;
-    }
-
     public void destroy()
     {
 	cli.stop();
 	map.setMyLocationEnabled(false);
     }
-
+    //åˆ¤æ–­ç”¨æˆ·è¿›æ²¡è¿›å…¥æ™¯ç‚¹
     private void setMark(BDLocation location)
     {
-	int currentCityId = app.getCityId();
-	List<JSpotBean> spots = new ArrayList<JSpotBean>();
-	JSONObject locationSpot = aService.judgeLocation(location.getLongitude(), location.getLatitude());
+	List<JSONObject> locationSpot = aService.judgeLocation(location.getLongitude(), location.getLatitude());
+	JSONObject currentSpot = locationSpot.get(0);
+	
 	try
 	{
-	    if (locationSpot.getInt("distance") < 100)
+	    for(JSONObject j : locationSpot)
 	    {
-		// ËµÃ÷ÓÃ»§ÔÚ¾°ÇøÄÚÏÔÊ¾¸Ã¾°ÇøÄÚµÄ¾°µã
-		vUtil.playAudio("ÄúÏÖÔÚËùÔÚµÄ¾°ÇøÊÇ"+locationSpot.getString("name"));
-		setJingDianPointer(locationSpot.getInt("ID"));
+		setJingDianPointer(j.getInt("ID"));
+		setSpotArea(j.getInt("ID"));
 	    }
-	  //·ñÔòÏÔÊ¾µ±Ç°³ÇÊĞËùÓĞ¾°Çø
-	  else
-	  {	
-	      vUtil.playAudio("ÄúÏÖÔÚ²»ÔÚÈÎºÎ¾°Çø");
-	      spots = aService.getSpotLocationByCityId(currentCityId);
-	      if (spots != null)
-	      {
-		  for (JSpotBean i : spots)
-		  {
-		      LatLng latlng = new LatLng(Double.parseDouble(i.getLatitude()), Double.parseDouble(i
-	  			                  .getLongitude()));
-	  	    Bundle bundle = new Bundle();
-	 	    bundle.putString("type", "spot");
-	 	    bundle.putString("name", i.getName());
-	 	    bundle.putInt("id", i.getId());
-	 	    bundle.putString("intro", i.getIntro());
-	 	    setMapMarker(R.drawable.am001_map_spot, latlng, bundle);
-		  }
+	    
+	    if (currentSpot.getInt("distance") < 1000)
+	    {
+		vUtil.playAudio("æ‚¨å½“å‰æ‰€åœ¨çš„æ™¯åŒºæ˜¯"+currentSpot.getString("name"));
 	    }
-	 }
+	    else
+	    {	
+	      vUtil.playAudio("æ‚¨å½“å‰ä¸åœ¨ä»»ä½•æ™¯åŒº");
+	    }
 	}
 	catch (Exception e)
 	{
 	    e.printStackTrace();
 	}
     }
+    
+    //è¡¨ç¤ºæ™¯åŒº
+    private void setSpotArea(int spotId)
+    {
+	List<JSONObject> spotAroundPoints = aService.getSpotAroundPointsBysoptId(spotId);
+	List<LatLng> pts = null;
+	//å¡«å……é¢œè‰²æ•°ç»„
+	int colors[] = { 0xAA51c6f4,0xAA0ad15a,0xAAc0d108,0xAAef7ada};
+	if(spotAroundPoints.size()>=5)
+	{
+	    pts = new ArrayList<LatLng>();  
+	    for(JSONObject j : spotAroundPoints)
+	    {
+		LatLng pt = null;
+		try
+		{
+		    pt = new LatLng(j.getDouble("latitude") ,  j.getDouble("longitude"));
+		}
+		catch (JSONException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+		pts.add(pt);
+		
+	    }
+	    i = i%4;
+	    i++;
+	    OverlayOptions polygonOption = new PolygonOptions().points(pts).stroke(new Stroke(5, colors[i])).fillColor(colors[i]);  
+	    //åœ¨åœ°å›¾ä¸Šæ·»åŠ å¤šè¾¹å½¢Optionï¼Œç”¨äºæ ‡è¯†æ™¯åŒºä½ç½®  
+	    map.addOverlay(polygonOption);
+	}
+  
+ }
 
+    //æ ‡è¯†æ™¯ç‚¹æ‰€åœ¨åŒºåŸŸ
     private void setJingDianPointer(int ID) throws JSONException
     {
 	List<JingDianBean> jingDians = aService

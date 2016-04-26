@@ -7,7 +7,6 @@ import com.njaqn.itravel.aqnapp.service.fragment.FacilityFragment;
 import com.njaqn.itravel.aqnapp.service.fragment.MapFragment;
 import com.njaqn.itravel.aqnapp.service.fragment.SelfFragment;
 import com.njaqn.itravel.aqnapp.util.MapUtil;
-import com.njaqn.itravel.aqnapp.util.PlayAuditData;
 import com.njaqn.itravel.aqnapp.util.VoiceUtil;
 import com.njaqn.itravel.aqnapp.AppInfo;
 import com.njaqn.itravel.aqnapp.R;
@@ -48,20 +47,20 @@ public class AM001HomePageActivity extends Activity
     {
 	super.onCreate(savedInstanceState);
 
-	PlayAuditData data = new PlayAuditData();
 	app = (AppInfo) getApplication(); // 获取Application
-	// ��ʼ������������
-	vutil = new VoiceUtil(this.getApplicationContext(), data);
+	//初始化语音播放配置
+	vutil = new VoiceUtil(this.getApplicationContext());
 
-	map = new MapUtil(this.getApplicationContext(), data, app,vutil);
+	map = new MapUtil(this.getApplicationContext(), app,vutil);
 	setContentView(R.layout.am001_home_page);
 
-	// ��������
+	//
 	animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
 	animation.setFillAfter(true);
-
-	// ��ʼ�������ؼ�
+	
+	// 初始化控件
 	initView();
+	vutil.changImageMode(imgPlayView,animation);
 	setEvent(0);
 
     }
@@ -71,39 +70,21 @@ public class AM001HomePageActivity extends Activity
 	imgPlayView.setAnimation(animation);
 	imgPlayView.startAnimation(animation);
     }
-    // ������������
+    // 切换播放模式
     public void switchPlayMode(View v)
     {
 	if (vutil != null)
 	{
-	    // playMode��ʾ����ģʽ��0��ʾδ���ţ�1��ʾ���ڲ��ţ�2��ʾ��ͣ
-	    if (vutil.getPlayMode() == 0)
-	    {
-		vutil.start();
-		imgPlayView.setBackgroundResource(R.drawable.am001_menu_c0);
-		imgPlayView.setAnimation(animation);
-		imgPlayView.startAnimation(animation);
-		vutil.setPlayMode(1);
-	    }
-	    else if (vutil.getPlayMode() == 1)
+	    if (vutil.getPlayMode() == 1)
 	    {
 		vutil.playPause();
-		imgPlayView.clearAnimation();
-		imgPlayView.setBackgroundResource(R.drawable.am001_menu_c1);
-		vutil.setPlayMode(2);
 	    }
 	    else if (vutil.getPlayMode() == 2)
 	    {
 		vutil.playResume();
-		imgPlayView.setBackgroundResource(R.drawable.am001_menu_c0);
-		imgPlayView.setAnimation(animation);
-		imgPlayView.startAnimation(animation);
-		vutil.setPlayMode(1);
 	    }
 	}
     }
-
-    // �л�����ͼ
     public void switchMainContent(View v)
     {
 	setDefaultImage();
@@ -225,7 +206,7 @@ public class AM001HomePageActivity extends Activity
 	startActivity(login);
     }
 
-    // ȡ�ó����л�activity���������
+    //进行城市切换
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
 	super.onActivityResult(requestCode, resultCode, data);
@@ -246,7 +227,6 @@ public class AM001HomePageActivity extends Activity
 	imgSelfView.setBackgroundResource(R.drawable.am001_menu_e0);
     }
 
-    // ��ʼ��view�е�ʹ�õ��Ŀؼ�
     private void initView()
     {
 	imgPlayView = (ImageView) findViewById(R.id.imgPlayView);
