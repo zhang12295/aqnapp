@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,8 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
 import com.njaqn.itravel.aqnapp.service.AmService;
 import com.njaqn.itravel.aqnapp.service.AmServiceImpl;
@@ -51,7 +54,8 @@ public class MapUtil
     private AppInfo app;
     private Button btnLocation;
     private VoiceUtil vUtil;
-
+    //表示显示那种颜色
+    private int i =0;
     private ButtonClickListener btnClick;
     private AmService aService = new AmServiceImpl();
     
@@ -78,7 +82,7 @@ public class MapUtil
 	BitmapDescriptor bitmap = BitmapDescriptorFactory
 		.fromResource(iconResource);
 	OverlayOptions option = new MarkerOptions().position(point)
-		.icon(bitmap).zIndex(0).period(25).extraInfo(info);
+		.icon(bitmap).zIndex(10).period(25).extraInfo(info);
 	map.addOverlay(option);
     }
 
@@ -274,45 +278,70 @@ public class MapUtil
 	cli.stop();
 	map.setMyLocationEnabled(false);
     }
-
+    //判断用户进没进入景点
     private void setMark(BDLocation location)
     {
-	int currentCityId = app.getCityId();
-	List<JSpotBean> spots = new ArrayList<JSpotBean>();
-	JSONObject locationSpot = aService.judgeLocation(location.getLongitude(), location.getLatitude());
+	List<JSONObject> locationSpot = aService.judgeLocation(location.getLongitude(), location.getLatitude());
+	JSONObject currentSpot = locationSpot.get(0);
+	
 	try
 	{
-	    if (locationSpot.getInt("distance") < 100)
+	    for(JSONObject j : locationSpot)
 	    {
-		vUtil.playAudio("您当前所在的景区是"+locationSpot.getString("name"));
-		setJingDianPointer(locationSpot.getInt("ID"));
+		setJingDianPointer(j.getInt("ID"));
+		setSpotArea(j.getInt("ID"));
+	    }
+	    
+	    if (currentSpot.getInt("distance") < 1000)
+	    {
+		vUtil.playAudio("您当前所在的景区是"+currentSpot.getString("name"));
 	    }
 	    else
 	    {	
 	      vUtil.playAudio("您当前不在任何景区");
-	      spots = aService.getSpotLocationByCityId(currentCityId);
-	      if (spots != null)
-	      {
-		  for (JSpotBean i : spots)
-		  {
-		      LatLng latlng = new LatLng(Double.parseDouble(i.getLatitude()), Double.parseDouble(i
-	  			                  .getLongitude()));
-	  	    Bundle bundle = new Bundle();
-	 	    bundle.putString("type", "spot");
-	 	    bundle.putString("name", i.getName());
-	 	    bundle.putInt("id", i.getId());
-	 	    bundle.putString("intro", i.getIntro());
-	 	    setMapMarker(R.drawable.am001_map_spot, latlng, bundle);
-		  }
 	    }
-	 }
 	}
 	catch (Exception e)
 	{
 	    e.printStackTrace();
 	}
     }
+    
+    //表示景区
+    private void setSpotArea(int spotId)
+    {
+	List<JSONObject> spotAroundPoints = aService.getSpotAroundPointsBysoptId(spotId);
+	List<LatLng> pts = null;
+	//填充颜色数组
+	int colors[] = { 0xAA51c6f4,0xAA0ad15a,0xAAc0d108,0xAAef7ada};
+	if(spotAroundPoints.size()>=5)
+	{
+	    pts = new ArrayList<LatLng>();  
+	    for(JSONObject j : spotAroundPoints)
+	    {
+		LatLng pt = null;
+		try
+		{
+		    pt = new LatLng(j.getDouble("latitude") ,  j.getDouble("longitude"));
+		}
+		catch (JSONException e)
+		{
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
+		pts.add(pt);
+		
+	    }
+	    i = i%4;
+	    i++;
+	    OverlayOptions polygonOption = new PolygonOptions().points(pts).stroke(new Stroke(5, colors[i])).fillColor(colors[i]);  
+	    //在地图上添加多边形Option，用于标识景区位置  
+	    map.addOverlay(polygonOption);
+	}
+  
+ }
 
+    //标识景点所在区域
     private void setJingDianPointer(int ID) throws JSONException
     {
 	List<JingDianBean> jingDians = aService

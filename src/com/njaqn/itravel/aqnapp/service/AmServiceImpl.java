@@ -347,12 +347,12 @@ public class AmServiceImpl implements AmService
     }
 
     @Override
-    public JSONObject judgeLocation(double longitude, double latitude)
+    public List<JSONObject> judgeLocation(double longitude, double latitude)
     {
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequestForSql("select top 1 name, ID, dbo.fnGetDistance("+longitude+","+latitude+",longitude,latitude) distance from J_Spot where Longitude is not null order by distance",3);
+	    String r = http.postRequestForSql("select top 4 name, ID, dbo.fnGetDistance("+longitude+","+latitude+",longitude,latitude) distance from J_Spot where Longitude is not null order by distance",3);
 	    if (r.equals("Err"))
 	    {
 		return null;
@@ -360,8 +360,47 @@ public class AmServiceImpl implements AmService
 	    else
 	    {
 		JSONArray array = new JSONArray(r);
-		JSONObject object = array.getJSONObject(0);
-		return object;
+		List<JSONObject> spots = new ArrayList<JSONObject>(); 
+		for(int i = 0 ;i<array.length(); i++)
+		{
+		    JSONObject object = array.getJSONObject(i);
+		    spots.add(object);
+		}
+		
+		return spots;
+	    }
+	    
+	}
+	catch (Exception ex)
+	{
+	    Log.e("Err", ex.getMessage());
+	}
+
+	return null;
+    }
+
+    @Override
+    public List<JSONObject> getSpotAroundPointsBysoptId(int spotId)
+    {
+	try
+	{
+	    UrlHttp http = new UrlHttp();
+	    String r = http.postRequestForSql("select longitude, latitude from J_SpotPointer where spotId ="+spotId,3);
+	    if (r.equals("Err"))
+	    {
+		return null;
+	    }
+	    else
+	    {
+		JSONArray array = new JSONArray(r);
+		List<JSONObject> spots = new ArrayList<JSONObject>(); 
+		for(int i = 0 ;i<array.length(); i++)
+		{
+		    JSONObject object = array.getJSONObject(i);
+		    spots.add(object);
+		}
+		
+		return spots;
 	    }
 	    
 	}
