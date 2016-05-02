@@ -53,7 +53,7 @@ public class UrlHttp
 		    int status = res.getStatusLine().getStatusCode();
 		    if (status != HttpStatus.SC_OK)
 		    {
-			throw new Exception("ÍøÂç·¢Éú´íÎó!ÇëÄÍĞÄµÈ´ı");
+			throw new Exception("ç½‘ç»œå‡ºç°æ•…éšœï¼Œè¯·ç¨å");
 		    }
 
 		    String msg = EntityUtils.toString(res.getEntity(), "UTF-8");
@@ -99,7 +99,7 @@ public class UrlHttp
     }
 
     /**
-     * Post Http ·¢ËÍÊı¾İ
+     * Post Http ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * 
      * @param msg
      * @return

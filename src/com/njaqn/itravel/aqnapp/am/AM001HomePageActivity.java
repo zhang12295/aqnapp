@@ -236,6 +236,41 @@ public class AM001HomePageActivity extends Activity
 	imgMapView = (ImageView) findViewById(R.id.imgMapView);
 
 	btnLocation = (Button) this.findViewById(R.id.btnLocation);
+	
+	
+    }
+    
+    @Override
+    protected void onNewIntent(Intent intent)
+    {
+        // TODO Auto-generated method stub
+        super.onNewIntent(intent);
+        setIntent(intent);
+       
+    }
+    
+    @Override
+    protected void onResume()
+    {
+        // TODO Auto-generated method stub
+        super.onResume();
+        Intent intent = getIntent();
+        String type = intent.getStringExtra("type");
+       	if(type != null)
+       	{
+       	    switch (intent.getStringExtra("type"))
+       	    {
+       	    	case "spot":
+       		map.setSpotArea(Integer.parseInt(intent.getStringExtra("id")));
+       		map.setJingDianPointer(Integer.parseInt(intent.getStringExtra("id")));
+       		map.setMapCenter(Integer.parseInt(intent.getStringExtra("id")), 16);
+       		break;
+
+       	    	default:
+       		break;
+       	    }
+       	}
+               
     }
 
 }

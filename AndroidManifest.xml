@@ -33,8 +33,7 @@
         android:allowBackup="true"
         android:icon="@drawable/app_icon1"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-"
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="NxAnQaOqyV7L7HSBV40lr7PE" />
@@ -59,6 +58,7 @@
             android:name=".am.AM002SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
+            android:launchMode="singleTask"
             android:name=".am.AM001HomePageActivity"
             android:label="@string/title_activity_shouye"
             android:screenOrientation="portrait" >
