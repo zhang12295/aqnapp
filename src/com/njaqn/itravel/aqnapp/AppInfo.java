@@ -107,7 +107,7 @@ public class AppInfo extends Application
 	}
 	else
 	{
-	    this.city = sp.getString("city", "ƒœæ©");
+	    this.city = sp.getString("city", "Âçó‰∫¨");
 	    cb = bs.getCityByName(this.city);
 	}
 	
