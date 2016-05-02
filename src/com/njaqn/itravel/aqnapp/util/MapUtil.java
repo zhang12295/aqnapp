@@ -393,7 +393,7 @@ public class MapUtil
     {
 	List<JSONObject> spotAroundPoints = aService
 		.getSpotAroundPointsBysoptId(spotId);
-	if (spotAroundPoints != null)
+	if (spotAroundPoints.size() != 0)
 	{
 	    JSONObject center = spotAroundPoints.get(0);
 	    MapStatusUpdate su = null;
