@@ -22,7 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class AM001HomePageActivity extends Activity
+public class AM001HomePageActivity extends Activity  
 {
     private MapUtil map = null;
     private VoiceUtil vutil;
@@ -32,12 +32,25 @@ public class AM001HomePageActivity extends Activity
     private ImageView imgFacilityView;
     private ImageView imgSelfView;
     private ImageView imgMapView;
+    private View layoutMapView;
 
-    private Button btnLocation;
+    public View getLayoutMapView() {
+		return layoutMapView;
+	}
+
+	private Button btnLocation;
     private AppInfo app;
 
-    private MapFragment mapFrg;
-    private CommunityFragment commFrg;
+    public AppInfo getApp() {
+		return app;
+	}
+
+	private MapFragment mapFrg;
+    public MapFragment getMapFrg() {
+		return mapFrg;
+	}
+
+	private CommunityFragment commFrg;
     private FacilityFragment facFrg;
     private SelfFragment selfFrg;
 
@@ -211,6 +224,8 @@ public class AM001HomePageActivity extends Activity
     {
 	super.onActivityResult(requestCode, resultCode, data);
 	this.btnLocation.setText(app.getCity());
+	switchMainContent(layoutMapView);
+	mapFrg.setCityRange(app.getCity());
     }
 
     public void imgSearchOnClick(View v)
@@ -234,7 +249,7 @@ public class AM001HomePageActivity extends Activity
 	imgFacilityView = (ImageView) findViewById(R.id.imgFacilityView);
 	imgSelfView = (ImageView) findViewById(R.id.imgSelfView);
 	imgMapView = (ImageView) findViewById(R.id.imgMapView);
-
+	layoutMapView = findViewById(R.id.layoutMapView);
 	btnLocation = (Button) this.findViewById(R.id.btnLocation);
 	
 	

@@ -4,9 +4,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是设施模块" />
+   <LinearLayout 
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:padding="16dp">
+       <LinearLayout 
+           android:id="@+id/facilityview_toilet"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <ImageView 
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:src="@drawable/sign_toilet"/>
+           <TextView 
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="公共厕所"
+               android:textSize="24sp"
+               android:layout_marginLeft="24dp"
+               android:layout_gravity="center_vertical"/>
+       </LinearLayout>
+       <LinearLayout 
+           android:id="@+id/facilityview_parking"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="16dp">
+           <ImageView 
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:src="@drawable/sign_parking"/>
+           <TextView 
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="停车场"
+               android:textSize="24sp"
+               android:layout_marginLeft="24dp"
+               android:layout_gravity="center_vertical"/>
+       </LinearLayout>
+   </LinearLayout>
 
 </LinearLayout>
