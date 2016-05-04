@@ -258,14 +258,17 @@ public class MapUtil
 	{
 	    Bundle bundle = arg0.getExtraInfo();
 	    String type = bundle.getString("type");
-	    if (type.equals("spot"))
-	    {
-		setPopMarker(arg0.getPosition(), bundle);
-	    }
-	    else if (type.equals("jingDian"))
-	    {
-		setPopMarker(arg0.getPosition(), bundle);
-	    }
+	    if (type != null) {
+	        if (type.equals("spot"))
+		    {
+			setPopMarker(arg0.getPosition(), bundle);
+		    }
+		    else if (type.equals("jingDian"))
+		    {
+			setPopMarker(arg0.getPosition(), bundle);
+		    }
+		}
+	
 
 	    return true;
 	}
