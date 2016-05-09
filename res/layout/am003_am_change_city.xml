@@ -28,6 +28,25 @@
             android:text="城市切换"
             android:textColor="#ffffff"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/city_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="8dp"
+            android:text="城市"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/city_location"
+            android:text="定位："
+            android:textColor="#ffffff" />
     </RelativeLayout>
 
     <LinearLayout

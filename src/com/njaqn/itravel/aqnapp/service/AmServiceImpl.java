@@ -233,16 +233,19 @@ public class AmServiceImpl implements AmService
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequest("spot.id", "" + spotId,
-		    AQNAppConst.PAGEID_AM_SPOT, AQNAppConst.OP_AM_SPOT_6);
+	    String r = http.postRequestForSql("select ID , Name, Longitude, latitude, intro from J_Spot where id = "+spotId,AQNAppConst.DB_ONE_MANY);
+	    
 	    if (r.equals("Err"))
-		return null;
+	    	return null;
 
 	    JSONObject obj = new JSONObject(r);
 	    JSpotBean spot = new JSpotBean();
 
-	    spot.setId(obj.getInt("id"));
-	    spot.setName(obj.getString("name"));
+	    spot.setName(obj.getString("Name"));
+	    spot.setId(obj.getInt("ID"));
+	    spot.setLongitude(obj.getString("Longitude"));
+	    spot.setLatitude(obj.getString("latitude"));
+	    spot.setIntro(obj.getString("intro"));
 
 	    return spot;
 	}
@@ -385,7 +388,7 @@ public class AmServiceImpl implements AmService
 	try
 	{
 	    UrlHttp http = new UrlHttp();
-	    String r = http.postRequestForSql("select longitude, latitude from J_SpotPointer where spotId ="+spotId,3);
+	    String r = http.postRequestForSql("select longitude, latitude from J_SpotPointer where spotId ="+spotId+" order by poniyrank",3);
 	    if (r.equals("Err"))
 	    {
 		return null;
