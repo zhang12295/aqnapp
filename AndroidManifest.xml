@@ -33,10 +33,20 @@
         android:allowBackup="true"
         android:icon="@drawable/app_icon1"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NxAnQaOqyV7L7HSBV40lr7PE" />
+            android:value="3oNLq7896aKFhNBSTGoq2OjECG1IwUCZ" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".M01WelComeActivity"
@@ -58,9 +68,8 @@
             android:name=".am.AM002SearchActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:launchMode="singleTask"
             android:name=".am.AM001HomePageActivity"
-            android:label="@string/title_activity_shouye"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".bm.BM006HomePageActivity" />

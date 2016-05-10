@@ -45,6 +45,5 @@ Temporary Items
 *.apk
 *.dex
 *.ap_
-*.jar
 bin\res\*
 *.dex

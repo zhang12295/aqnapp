@@ -94,44 +94,42 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/am001_menu_c1"
+                android:background="@drawable/am001_menu_c1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutFacilityView"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="switchMainContent" >
+
+            <ImageView
+                android:id="@+id/imgFacilityView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/am001_menu_d0"
                 android:clickable="false" />
         </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/layoutFacilityView"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:onClick="switchMainContent" >
+        <RelativeLayout
+            android:id="@+id/layoutSelfView"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:onClick="switchMainContent" >
 
-        <ImageView
-            android:id="@+id/imgFacilityView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/am001_menu_d0"
-            android:clickable="false" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layoutSelfView"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:onClick="switchMainContent" >
-
-        <ImageView
-            android:id="@+id/imgSelfView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/am001_menu_e0"
-            android:clickable="false" />
-    </RelativeLayout>
-
-</LinearLayout>
+            <ImageView
+                android:id="@+id/imgSelfView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/am001_menu_e0"
+                android:clickable="false" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

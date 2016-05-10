@@ -50,10 +50,11 @@ public class AM003CityChangeActivity extends Activity {
 	private ListView lvCityAm003;
 	private BaseService service;
 	private AppInfo app;
-	private int initCityid;
-	private int initProvinceId;
+	private int cityId;
+	private int provinceId;
 	private ImageButton searchButton;
 	private ImageView ivDelete;
+	private TextView localCity;
 	private EditText searchEditText;
 	private List<HashMap<String, Object>> provinceData;
 	private LruCache<Integer, List<HashMap<String, Object>>> cityData;
@@ -75,19 +76,30 @@ public class AM003CityChangeActivity extends Activity {
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.am003_am_change_city);
 		app = (AppInfo) getApplication(); // 获得Application
-		initCityid = app.getCityId();
+		cityId = app.getCityId();
 		service = new BaseServiceImpl();
-		BProvinceBean bean = service.getProvinceByCityId(initCityid);
+		BProvinceBean bean = service.getProvinceByCityId(cityId);
 		if (isNotNullorError(bean)) {
-			initProvinceId = bean.getId();
+			provinceId = bean.getId();
 		} else {
-			initProvinceId = 14;
+			provinceId = 14;
 		}
 
+		localCity = (TextView) findViewById(R.id.city_location);
+		localCity.setText(app.getLocalCity());
+		localCity.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				app.setProvinceId(provinceId);
+				app.setCity(app.getLocalCity());
+				returnOnClick(null);
+				
+			}
+		});
 		lvProvinceAm003 = (ListView) this.findViewById(R.id.lvProvinceAm003);
 		lvCityAm003 = (ListView) this.findViewById(R.id.lvCityAm003);
 		ivDelete = (ImageView) findViewById(R.id.search_iv_delete);
@@ -147,7 +159,7 @@ public class AM003CityChangeActivity extends Activity {
 		satProvince = new SimpleAdapter(this, provinceData,
 				R.drawable.am003_item_province, new String[] { "name" },
 				new int[] { R.id.provinceName });
-		provinceSetSelection(initProvinceId, initCityid);
+		provinceSetSelection(provinceId, cityId);
 	}
 
 	public void provinceSetSelection(final int provinceId, int cityid) {
@@ -184,7 +196,8 @@ public class AM003CityChangeActivity extends Activity {
 			ListView lv_province = (ListView) parent;
 			HashMap<String, Object> data = (HashMap<String, Object>) lv_province
 					.getItemAtPosition(position);
-			showCity(Integer.parseInt(data.get("id").toString()), 0);
+			provinceId = Integer.parseInt(data.get("id").toString());
+			showCity(provinceId, 0);
 		}
 	}
 
@@ -236,6 +249,8 @@ public class AM003CityChangeActivity extends Activity {
 			HashMap<String, Object> data = (HashMap<String, Object>) lvCityAm003
 					.getItemAtPosition(position);
 			String name = (String) data.get("name");
+			app.setProvinceId(provinceId);
+			app.setCityId(cityId);
 			app.setCity(name);
 			returnOnClick(null);
 		}
