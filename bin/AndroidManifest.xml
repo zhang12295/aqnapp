@@ -36,7 +36,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3oNLq7896aKFhNBSTGoq2OjECG1IwUCZ" />
+            android:value="O1rW0HwpY37kWCxoYtmO07Iyzeium7S5" />
 
         <service
             android:name="com.baidu.location.f"
@@ -84,9 +84,13 @@
         <activity android:name=".am.AM006SpotActivity" >
         </activity>
         <activity
-            android:name="com.njaqn.itravel.aqnapp.am.AM006SpotIntroActivity"
+            android:name="com.njaqn.itravel.aqnapp.am.AM007SpotIntroActivity"
             android:label="@string/title_activity_am006_spot_intro"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.njaqn.itravel.aqnapp.bm.BM007SettingAcitivity"
+             >
         </activity>
     </application>
 

@@ -21,7 +21,6 @@
             android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:background="@drawable/title_color"
-            android:onClick="returnOnClick"
             android:src="@drawable/m01_jian_tou_left" />
 
         <TextView

@@ -12,15 +12,15 @@ import android.os.Environment;
 
 public class ImageFileUtil {
 	 /** 
-     * sd¿¨µÄ¸ùÄ¿Â¼ 
+     * sdï¿½ï¿½ï¿½Ä¸ï¿½Ä¿Â¼ 
      */  
     private static String mSdRootPath = Environment.getExternalStorageDirectory().getPath();  
     /** 
-     * ÊÖ»úµÄ»º´æ¸ùÄ¿Â¼ 
+     * ï¿½Ö»ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ 
      */  
     private static String mDataRootPath = null;  
     /** 
-     * ±£´æImageµÄÄ¿Â¼Ãû 
+     * ï¿½ï¿½ï¿½ï¿½Imageï¿½ï¿½Ä¿Â¼ï¿½ï¿½ 
      */  
     private final static String FOLDER_NAME = "/AQN";  
       
@@ -31,16 +31,16 @@ public class ImageFileUtil {
       
   
     /** 
-     * »ñÈ¡´¢´æImageµÄÄ¿Â¼ 
+     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Imageï¿½ï¿½Ä¿Â¼ 
      * @return 
      */  
-    private String getStorageDirectory(){  
+    public String getStorageDirectory(){  
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) ?  
                 mSdRootPath + FOLDER_NAME : mDataRootPath + FOLDER_NAME;  
     }  
       
     /** 
-     * ±£´æImageµÄ·½·¨£¬ÓÐsd¿¨´æ´¢µ½sd¿¨£¬Ã»ÓÐ¾Í´æ´¢µ½ÊÖ»úÄ¿Â¼ 
+     * ï¿½ï¿½ï¿½ï¿½Imageï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sdï¿½ï¿½ï¿½æ´¢ï¿½ï¿½sdï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð¾Í´æ´¢ï¿½ï¿½ï¿½Ö»ï¿½Ä¿Â¼ 
      * @param fileName  
      * @param bitmap    
      * @throws IOException 
@@ -63,7 +63,7 @@ public class ImageFileUtil {
     }  
       
     /** 
-     * ´ÓÊÖ»ú»òÕßsd¿¨»ñÈ¡Bitmap 
+     * ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½sdï¿½ï¿½ï¿½ï¿½È¡Bitmap 
      * @param fileName 
      * @return 
      */  
@@ -72,7 +72,7 @@ public class ImageFileUtil {
     }  
       
     /** 
-     * ÅÐ¶ÏÎÄ¼þÊÇ·ñ´æÔÚ 
+     * ï¿½Ð¶ï¿½ï¿½Ä¼ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ 
      * @param fileName 
      * @return 
      */  
@@ -81,7 +81,7 @@ public class ImageFileUtil {
     }  
       
     /** 
-     * »ñÈ¡ÎÄ¼þµÄ´óÐ¡ 
+     * ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½Ä´ï¿½Ð¡ 
      * @param fileName 
      * @return 
      */  
@@ -91,7 +91,7 @@ public class ImageFileUtil {
       
       
     /** 
-     * É¾³ýSD¿¨»òÕßÊÖ»úµÄ»º´æÍ¼Æ¬ºÍÄ¿Â¼ 
+     * É¾ï¿½ï¿½SDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ä»ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ä¿Â¼ 
      */  
     public void deleteFile() {  
         File dirFile = new File(getStorageDirectory());  
