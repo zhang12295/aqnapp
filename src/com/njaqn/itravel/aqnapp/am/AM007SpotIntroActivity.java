@@ -32,7 +32,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AM006SpotIntroActivity extends Activity implements
+public class AM007SpotIntroActivity extends Activity implements
 	OnPageChangeListener
 {
 
@@ -82,7 +82,7 @@ public class AM006SpotIntroActivity extends Activity implements
 			    + "=" + id, AQNAppConst.DB_MANY_MANY);
 	    if (r.equals("Err"))
 	    {
-		Toast.makeText(AM006SpotIntroActivity.this, "暂无网络",
+		Toast.makeText(AM007SpotIntroActivity.this, "暂无网络",
 			Toast.LENGTH_SHORT).show();
 	    }
 	    else
