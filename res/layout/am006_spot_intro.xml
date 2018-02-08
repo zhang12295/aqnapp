@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.njaqn.itravel.aqnapp.am.AM006SpotIntroActivity" >
+    tools:context="com.njaqn.itravel.aqnapp.am.AM007SpotIntroActivity" >
 
     <RelativeLayout
         android:id="@+id/topMenu"
